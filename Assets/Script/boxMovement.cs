@@ -20,6 +20,7 @@ public class boxMovement : MonoBehaviour {
 	}
 	public void SetWallZero(){
 		inWall = 0;
+		Debug.Log("inwall " + gameObject.name + " " + inWall);
 	}
 
 //om InWall är = 0 returnerar BoxMovement värdet True till pacman
