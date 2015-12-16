@@ -7,7 +7,7 @@ public class MeteorMaster : MonoBehaviour {
 
 
 	void Start () {
-		InvokeRepeating("MeteorSpawnPosition", 0, 2);
+		InvokeRepeating("MeteorSpawnPosition", 0, 4);
 	
 	}
 	void MeteorSpawnPosition(){
@@ -17,6 +17,8 @@ public class MeteorMaster : MonoBehaviour {
 			float randomPositionZ = Random.Range(-10f, 10f);
 			meteorArray[randomMeteor].gameObject.transform.position = new Vector3(randomPositionX, 25f, randomPositionZ);
 			meteorArray[randomMeteor].gameObject.GetComponent<SphereCollider>().radius = 0.5f;
+			meteorArray[randomMeteor].gameObject.GetComponent<Renderer>().enabled = true;
+			meteorArray[randomMeteor].gameObject.GetComponent<Meteor>().ActivateSpeed();
 			meteorArray[randomMeteor].SetActive(true);
 		}else{
 			MeteorSpawnPosition();
