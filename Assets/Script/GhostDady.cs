@@ -9,6 +9,14 @@ public class GhostDady : MonoBehaviour {
 	public GameObject pacman;
 	public Transform pacmanPosition;
 	public GameObject nest;
+	public GameObject pointObject;
+
+	public bool followTarget;
+	public bool randomDestination;
+	public bool followAndRandom;
+	//public bool patrol;
+	bool newRandom;
+	bool findPoint;
 	
 	bool imHunting = false;
 	bool imEscaping = false;
@@ -16,6 +24,7 @@ public class GhostDady : MonoBehaviour {
 	NavMeshAgent theAgent;
 
 	float distance = 20f;
+	float mySpeed = 3f;
 
 	Vector3 escapeVector;
 
@@ -24,11 +33,13 @@ public class GhostDady : MonoBehaviour {
 	}
 //-----------------Hunt----------------------
 	public void ActivateHunt(){
-		Debug.Log("5");
 		if(imDead != true){
 			imHunting = true;
 			imEscaping = false;
 			imDead = false;
+			mySpeed = 3f;
+			newRandom = true;
+			findPoint = true;
 			ghostForms[0].SetActive(true);
 			ghostForms[1].SetActive(false);
 			ghostForms[2].SetActive(false);
@@ -72,10 +83,17 @@ public class GhostDady : MonoBehaviour {
 //-----------------Movement in uppdate---------
 	void Update () {
 		if(imHunting == true){
-			gameObject.GetComponent<NavMeshAgent>().SetDestination (pacman.transform.position);
-			gameObject.GetComponent<NavMeshAgent>().speed = 3.5f;
+			//gameObject.GetComponent<NavMeshAgent>().SetDestination (pacman.transform.position);
+			gameObject.GetComponent<NavMeshAgent>().speed = mySpeed;
 			//Debug.Log("hunt.." + imHunting);
 			//placera in script här !!!
+			if(followTarget == true){
+				FollowTargetMethod();
+			}else if(randomDestination == true){
+				RandomDestinationMethod();
+			}else if(followAndRandom == true){
+				FollowAndRandomMethod();
+			}
 		}else if(imEscaping == true){
 			escapeVector = (pacmanPosition.position - transform.position).normalized;
 			theAgent.destination = transform.position - escapeVector * distance;
@@ -102,9 +120,59 @@ public class GhostDady : MonoBehaviour {
 	}
 	IEnumerator huntAgainTimer(){
 		yield return new WaitForSeconds(5f);
-		gameObject.GetComponent<NavMeshAgent>().radius = 0.5f;  //startRadius!
+		gameObject.GetComponent<NavMeshAgent>().radius = 0.3f;  //startRadius!
 		imDead = false;
 		ActivateHunt();
+	}
+//------------------------Increase Ghost Speed---------------------
+	public void SpeedUp(){
+		//used by scripts like AbilityMagnet
+		mySpeed = 5f;
+	}
+//-------------------Diffrent Hunt Methods---------------------------
+	void FollowTargetMethod(){
+		gameObject.GetComponent<NavMeshAgent>().SetDestination (pacman.transform.position);
+		gameObject.GetComponent<NavMeshAgent>().speed = mySpeed;
+	}
+	void RandomDestinationMethod(){
+		Debug.Log("in destMethod");
+		gameObject.GetComponent<NavMeshAgent>().SetDestination (pointObject.transform.position);
+		if(newRandom == true){
+			newRandom = false;
+			float x = Random.Range(-12, 12);
+			float z = Random.Range(-12, 12);
+			Vector3 point = new Vector3( x, 0, z);
+			pointObject.transform.position = point;
+			StartCoroutine(NewRandom());
+		}		
+	}
+	IEnumerator NewRandom(){
+		yield return new WaitForSeconds(3);
+		newRandom = true;
+	}
+	void FollowAndRandomMethod(){
+		if(newRandom == true){
+			newRandom = false;
+			float x = Random.Range(-12, 12);
+			float z = Random.Range(-12, 12);
+			Vector3 point = new Vector3( x, 0, z);
+			pointObject.transform.position = point;
+			StartCoroutine(RandomAgain());
+		}
+		if(findPoint == true){
+			gameObject.GetComponent<NavMeshAgent>().SetDestination (pointObject.transform.position);
+		}else{
+			gameObject.GetComponent<NavMeshAgent>().SetDestination (pacman.transform.position);
+		}	
+		if(transform.position == pointObject.transform.position && findPoint == true){
+			findPoint = false;
+
+		}
+	}
+	IEnumerator RandomAgain(){
+		yield return new WaitForSeconds(10f);
+		newRandom = true;
+		findPoint = true;
 	}
 
 }

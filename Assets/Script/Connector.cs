@@ -10,6 +10,8 @@ public class Connector : MonoBehaviour {
 	public GameObject[] diamondsArray;
 	public GameObject GhostMasterObject;
 	public GameObject pacmanObject;
+	public GameObject teleporterObject;
+	Teleporter teleporterScript;
 	GhostMaster ghostMasterScript;
 	pacmanMove PacmanMoveScript;
 	int maxGold;
@@ -31,6 +33,7 @@ public class Connector : MonoBehaviour {
 		ghostMasterScript = GhostMasterObject.GetComponent<GhostMaster>();
 		PrinterScript = PrinterObject.GetComponent<Printer>();
 		PacmanMoveScript = pacmanObject.GetComponent<pacmanMove>();
+		teleporterScript = teleporterObject.GetComponent<Teleporter>();
 
 		FindGoldAmount();
 		maxGold = goldArray.Length;
@@ -77,9 +80,11 @@ public class Connector : MonoBehaviour {
 
 //------------------------Explosives--------------------------
 		}else if(trigger.gameObject.tag == "Explosives"){
-			//pacman hurt
+			//PacmanLoseLife();
+			Debug.Log("hit by Explosive");
 		}else if (trigger.gameObject.tag == "Teleport"){
 			//teleportScript.teleportPacman(trigger, pacmanObject);
+			teleporterScript.TeleportPacman(trigger);
 		}
 	}
 //------------------------Courage Active Timer-----------------
