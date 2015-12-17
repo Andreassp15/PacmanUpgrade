@@ -194,13 +194,13 @@ public class pacmanMove : MonoBehaviour {
 	void VisualPacmanMethod(float x, float z){
 		//roterar pacmans visuella gamobject i spelerens valda riktning
 		if(x == 0 && z == 1){
-			visualPacman.transform.localEulerAngles = new Vector3(0, 0, 0);
-		}else if(x == 0 && z == -1){
-			visualPacman.transform.localEulerAngles = new Vector3(0, 180, 0);
-		}else if(x == -1 && z == 0){
-			visualPacman.transform.localEulerAngles = new Vector3(0, 270, 0);
-		}else if(x == 1 && z == 0){
 			visualPacman.transform.localEulerAngles = new Vector3(0, 90, 0);
+		}else if(x == 0 && z == -1){
+			visualPacman.transform.localEulerAngles = new Vector3(0, 270, 0);
+		}else if(x == -1 && z == 0){
+			visualPacman.transform.localEulerAngles = new Vector3(0, 0, 0);
+		}else if(x == 1 && z == 0){
+			visualPacman.transform.localEulerAngles = new Vector3(0, 180, 0);
 		}
 	}
 //-----------------Return dX---------------------------
