@@ -1,7 +1,11 @@
 fileFormatVersion: 2
 guid: 6a5121a271d86c94abc219d4801ea0f7
 folderAsset: yes
+<<<<<<< HEAD:Assets/Scenes/World Two.meta
 timeCreated: 1450351660
+=======
+timeCreated: 1450351604
+>>>>>>> refs/remotes/origin/master:Assets/Objects/World 1/Walls.meta
 licenseType: Free
 DefaultImporter:
   userData: 

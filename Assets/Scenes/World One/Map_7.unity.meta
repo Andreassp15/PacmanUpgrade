@@ -1,6 +1,12 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Scenes/World One/Map_7.unity.meta
 guid: 9dee716867e5918409cc20014bd3da1f
 timeCreated: 1450276156
+=======
+guid: 8c95fc25dc56a864d84aa8a35b349951
+folderAsset: yes
+timeCreated: 1450351604
+>>>>>>> refs/remotes/origin/master:Assets/Objects/World 1/Decor.meta
 licenseType: Free
 DefaultImporter:
   userData: 
