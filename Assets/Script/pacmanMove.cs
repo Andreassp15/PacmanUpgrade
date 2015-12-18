@@ -218,4 +218,16 @@ public class pacmanMove : MonoBehaviour {
 		DontMoveMethod();
 
 	}
+//---------Lower MoveSpeed from Poison-------------------
+	public void LowerMoveSpeed(){
+		if(normalSpeed > 0.08f){
+			normalSpeed = normalSpeed - 0.005f;	
+		}else{
+			Debug.Log("maximum slow");
+		}
+
+	}
+	public void IncreaseMoveSpeed(){
+		normalSpeed = 0.1f;
+	}
 }

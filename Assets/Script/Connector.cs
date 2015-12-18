@@ -14,6 +14,7 @@ public class Connector : MonoBehaviour {
 	Teleporter teleporterScript;
 	GhostMaster ghostMasterScript;
 	pacmanMove PacmanMoveScript;
+	int poisonCount = 0;
 	int maxGold;
 	int gold;
 	int score;
@@ -52,6 +53,7 @@ public class Connector : MonoBehaviour {
 //-----------------------Hit Courage--------------------------
 		}else if(trigger.gameObject.tag == "Courage"){
 			trigger.gameObject.SetActive(false);
+			PacmanMoveScript.IncreaseMoveSpeed();
 			int courageBonus = 15;
 
 			if(courageActive == false){
@@ -85,6 +87,11 @@ public class Connector : MonoBehaviour {
 		}else if (trigger.gameObject.tag == "Teleport"){
 			//teleportScript.teleportPacman(trigger, pacmanObject);
 			teleporterScript.TeleportPacman(trigger);
+		}else if (trigger.gameObject.tag == "Poison"){
+			trigger.gameObject.SetActive(false);
+
+			PacmanMoveScript.LowerMoveSpeed();
+			Debug.Log("hit by Poison");
 		}
 	}
 //------------------------Courage Active Timer-----------------
@@ -140,6 +147,7 @@ public class Connector : MonoBehaviour {
 		}else{
 			PacmanMoveScript.gameObject.SetActive(false);
 			PacmanMoveScript.TeleportToSpawnPoint();
+			PacmanMoveScript.IncreaseMoveSpeed();
 			ghostMasterScript.ResetGhost();//teleports ghost to nest
 			InvokeRepeating("RespawnTimer",0, 1);
 		}
@@ -212,6 +220,16 @@ public class Connector : MonoBehaviour {
 		PrinterScript.PrintPacmanLives(pacmanLives);
 		PrinterScript.PrintCourageNothing();
 		//PrinterScript.PrintMapTime();
+	}
+//---------------Poison Counter---------------
+	void PoisonCounter(){
+		if(poisonCount == 4){
+	
+		}
+		else{
+			poisonCount = poisonCount +1;
+
+		}
 	}
 
 	
