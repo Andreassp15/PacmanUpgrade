@@ -46,6 +46,14 @@ public class Printer : MonoBehaviour {
 	public void PrintInfoRespawnText(int i){
 		infoText.text = "Respawning in: " + i.ToString();
 	}
+	public void PrintInfoArrows(string s1, int i, string s2){
+		infoText.text = s1 + " " + i + " " + s2.ToString();
+		StartCoroutine(DontShowMe());
+	}
+	IEnumerator DontShowMe(){
+		yield return new WaitForSeconds(1);
+		PrintInfoNotingText();
+	}
 	public void PrintInfoNotingText(){
 		infoText.text = "".ToString();
 	}
