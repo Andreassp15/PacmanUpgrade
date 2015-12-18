@@ -104,7 +104,7 @@ public class pacmanMove : MonoBehaviour {
 		moveSpeed = normalSpeed;
 	}
 //----------------Remove pacman Speed---------------------
-	void DontMoveMethod(){
+	public void DontMoveMethod(){
 		moveSpeed = dontMove;
 	}
 //----------------Checks if Box HIt Wall--------------------- 
@@ -212,5 +212,10 @@ public class pacmanMove : MonoBehaviour {
 	public float ReturnDirectionZ(){
 		//körs från Ability Scripten för att avgöra riktningar
 		return dZ; 
+	}
+	public void directionFromAbility(){
+
+		DontMoveMethod();
+
 	}
 }
