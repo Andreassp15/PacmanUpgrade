@@ -14,7 +14,7 @@ public class Meteor : MonoBehaviour {
 	}
 	
 
-	void Update () {
+	void FixedUpdate () {
 		direction = new Vector3(0, 0, -1); 
 		transform.Translate(direction * moveSpeed);
 	}

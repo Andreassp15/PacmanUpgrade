@@ -8,7 +8,7 @@ public class ShieldRotate : MonoBehaviour {
 	
 	}
 
-	void Update () {
+	void FixedUpdate () {
 		rotationMethod();
 	}
 	void rotationMethod()
