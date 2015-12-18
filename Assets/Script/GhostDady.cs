@@ -81,7 +81,7 @@ public class GhostDady : MonoBehaviour {
 		//Debug.Log("hunt " + imHunting + " escape " + imEscaping + "dead " + imDead);
 	}
 //-----------------Movement in uppdate---------
-	void Update () {
+	void FixedUpdate () {
 		if(imHunting == true){
 			//gameObject.GetComponent<NavMeshAgent>().SetDestination (pacman.transform.position);
 			gameObject.GetComponent<NavMeshAgent>().speed = mySpeed;

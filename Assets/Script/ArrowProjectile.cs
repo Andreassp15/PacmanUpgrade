@@ -14,7 +14,7 @@ public class ArrowProjectile : MonoBehaviour {
 	}
 	
 
-	void Update () {
+	void FixedUpdate () {
 		direction = new Vector3(x, y, z); 
 		transform.Translate(direction * moveSpeed);
 	}
