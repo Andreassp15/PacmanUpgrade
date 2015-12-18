@@ -4,7 +4,65 @@ timeCreated: 1450115738
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    100000: pCylinder1
+    100002: pPlane1
+    100004: pPlane10
+    100006: pPlane2
+    100008: pPlane3
+    100010: pPlane4
+    100012: pPlane5
+    100014: pPlane6
+    100016: pPlane7
+    100018: pPlane8
+    100020: pPlane9
+    100022: //RootNode
+    400000: pCylinder1
+    400002: pPlane1
+    400004: pPlane10
+    400006: pPlane2
+    400008: pPlane3
+    400010: pPlane4
+    400012: pPlane5
+    400014: pPlane6
+    400016: pPlane7
+    400018: pPlane8
+    400020: pPlane9
+    400022: //RootNode
+    2300000: pCylinder1
+    2300002: pPlane1
+    2300004: pPlane10
+    2300006: pPlane2
+    2300008: pPlane3
+    2300010: pPlane4
+    2300012: pPlane5
+    2300014: pPlane6
+    2300016: pPlane7
+    2300018: pPlane8
+    2300020: pPlane9
+    3300000: pCylinder1
+    3300002: pPlane1
+    3300004: pPlane10
+    3300006: pPlane2
+    3300008: pPlane3
+    3300010: pPlane4
+    3300012: pPlane5
+    3300014: pPlane6
+    3300016: pPlane7
+    3300018: pPlane8
+    3300020: pPlane9
+    4300000: pCylinder1
+    4300002: pPlane1
+    4300004: pPlane2
+    4300006: pPlane3
+    4300008: pPlane4
+    4300010: pPlane5
+    4300012: pPlane6
+    4300014: pPlane7
+    4300016: pPlane8
+    4300018: pPlane9
+    4300020: pPlane10
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
