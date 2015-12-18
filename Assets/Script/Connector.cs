@@ -14,7 +14,7 @@ public class Connector : MonoBehaviour {
 	Teleporter teleporterScript;
 	GhostMaster ghostMasterScript;
 	pacmanMove PacmanMoveScript;
-	int poisonCount = 0;
+	int poisonCount = 4;
 	int maxGold;
 	int gold;
 	int score;
@@ -53,7 +53,6 @@ public class Connector : MonoBehaviour {
 //-----------------------Hit Courage--------------------------
 		}else if(trigger.gameObject.tag == "Courage"){
 			trigger.gameObject.SetActive(false);
-			PacmanMoveScript.IncreaseMoveSpeed();
 			int courageBonus = 15;
 
 			if(courageActive == false){
@@ -82,15 +81,15 @@ public class Connector : MonoBehaviour {
 
 //------------------------Explosives--------------------------
 		}else if(trigger.gameObject.tag == "Explosives"){
-			//PacmanLoseLife();
+			PacmanLoseLife();
 			Debug.Log("hit by Explosive");
 		}else if (trigger.gameObject.tag == "Teleport"){
 			//teleportScript.teleportPacman(trigger, pacmanObject);
 			teleporterScript.TeleportPacman(trigger);
+//-----------------------Poison----------------------------
 		}else if (trigger.gameObject.tag == "Poison"){
 			trigger.gameObject.SetActive(false);
-
-			PacmanMoveScript.LowerMoveSpeed();
+			PoisonCounter();
 			Debug.Log("hit by Poison");
 		}
 	}
@@ -147,7 +146,7 @@ public class Connector : MonoBehaviour {
 		}else{
 			PacmanMoveScript.gameObject.SetActive(false);
 			PacmanMoveScript.TeleportToSpawnPoint();
-			PacmanMoveScript.IncreaseMoveSpeed();
+			ResetPoisonCount();
 			ghostMasterScript.ResetGhost();//teleports ghost to nest
 			InvokeRepeating("RespawnTimer",0, 1);
 		}
@@ -170,7 +169,7 @@ public class Connector : MonoBehaviour {
 //----------------Respawn Timer----------------------------
 	void RespawnTimer(){
 
-		if(respawnTime < 1){
+		if(respawnTime <= 1){
 			PacmanMoveScript.gameObject.SetActive(true);
 			ghostMasterScript.HuntGhost();
 			PrinterScript.PrintInfoNotingText();//Print Nothing in Info Text
@@ -223,13 +222,17 @@ public class Connector : MonoBehaviour {
 	}
 //---------------Poison Counter---------------
 	void PoisonCounter(){
-		if(poisonCount == 4){
-	
+		if(poisonCount == 1){
+			PacmanLoseLife();
+			poisonCount = 4;	
 		}
 		else{
-			poisonCount = poisonCount +1;
-
+			poisonCount = poisonCount -1;
+			PrinterScript.PrintInfoArrows("You been poisoned, take ", poisonCount, " more arrows and you are done");
 		}
+	}
+	void ResetPoisonCount(){
+		poisonCount = 4;
 	}
 
 	
