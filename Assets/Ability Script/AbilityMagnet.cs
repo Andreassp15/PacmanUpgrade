@@ -28,9 +28,9 @@ public class AbilityMagnet : MonoBehaviour {
 		}
 	}
 	IEnumerator MagnetTimer(){
-		gameObject.GetComponent<SphereCollider>().radius = 4;
+		gameObject.GetComponent<Transform>().localScale = new Vector3(7, 7, 7);
 		yield return new WaitForSeconds(3f);
-		gameObject.GetComponent<SphereCollider>().radius = 0;
+		gameObject.GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
 		InvokeRepeating("coolDownTimer", 0, 1);
 	}
 	void OnTriggerEnter(Collider trigger){

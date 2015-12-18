@@ -135,7 +135,7 @@ public class GhostDady : MonoBehaviour {
 		gameObject.GetComponent<NavMeshAgent>().speed = mySpeed;
 	}
 	void RandomDestinationMethod(){
-		Debug.Log("in destMethod");
+		//Debug.Log("in destMethod");
 		gameObject.GetComponent<NavMeshAgent>().SetDestination (pointObject.transform.position);
 		if(newRandom == true){
 			newRandom = false;

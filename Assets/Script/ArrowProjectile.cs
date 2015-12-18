@@ -19,7 +19,7 @@ public class ArrowProjectile : MonoBehaviour {
 		transform.Translate(direction * moveSpeed);
 	}
 	void OnTriggerEnter(Collider trigger){
-		if(trigger.gameObject.tag == "Pacman" || trigger.gameObject.tag == "Wall"){
+		if(trigger.gameObject.tag == "Wall"){
 			gameObject.SetActive(false);
 		}
 
