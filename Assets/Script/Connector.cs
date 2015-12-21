@@ -10,8 +10,10 @@ public class Connector : MonoBehaviour {
 	public GameObject[] diamondsArray;
 	public GameObject GhostMasterObject;
 	public GameObject pacmanObject;
-	public GameObject teleporterObject;
-	Teleporter teleporterScript;
+	//public GameObject teleporterObject;
+	//Teleporter teleporterScript;
+	public GameObject teleportOneWayObject;
+	TeleportOneWay teleportOneWayScript;
 	GhostMaster ghostMasterScript;
 	pacmanMove PacmanMoveScript;
 	int poisonCount = 4;
@@ -34,7 +36,8 @@ public class Connector : MonoBehaviour {
 		ghostMasterScript = GhostMasterObject.GetComponent<GhostMaster>();
 		PrinterScript = PrinterObject.GetComponent<Printer>();
 		PacmanMoveScript = pacmanObject.GetComponent<pacmanMove>();
-		teleporterScript = teleporterObject.GetComponent<Teleporter>();
+		//teleporterScript = teleporterObject.GetComponent<Teleporter>();
+		teleportOneWayScript = teleportOneWayObject.GetComponent<TeleportOneWay>();
 
 		FindGoldAmount();
 		maxGold = goldArray.Length;
@@ -85,7 +88,8 @@ public class Connector : MonoBehaviour {
 			Debug.Log("hit by Explosive");
 		}else if (trigger.gameObject.tag == "Teleport"){
 			//teleportScript.teleportPacman(trigger, pacmanObject);
-			teleporterScript.TeleportPacman(trigger);
+			//teleporterScript.TeleportPacman(trigger);
+			teleportOneWayScript.TeleportPacman(trigger);
 //-----------------------Poison----------------------------
 		}else if (trigger.gameObject.tag == "Poison"){
 			trigger.gameObject.SetActive(false);
