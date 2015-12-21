@@ -10,8 +10,11 @@ public class Connector : MonoBehaviour {
 	public GameObject[] diamondsArray;
 	public GameObject GhostMasterObject;
 	public GameObject pacmanObject;
+	public GameObject teleporterObject;
+	Teleporter teleporterScript;
 	GhostMaster ghostMasterScript;
 	pacmanMove PacmanMoveScript;
+	int poisonCount = 4;
 	int maxGold;
 	int gold;
 	int score;
@@ -31,6 +34,7 @@ public class Connector : MonoBehaviour {
 		ghostMasterScript = GhostMasterObject.GetComponent<GhostMaster>();
 		PrinterScript = PrinterObject.GetComponent<Printer>();
 		PacmanMoveScript = pacmanObject.GetComponent<pacmanMove>();
+		teleporterScript = teleporterObject.GetComponent<Teleporter>();
 
 		FindGoldAmount();
 		maxGold = goldArray.Length;
@@ -77,9 +81,16 @@ public class Connector : MonoBehaviour {
 
 //------------------------Explosives--------------------------
 		}else if(trigger.gameObject.tag == "Explosives"){
-			//pacman hurt
+			PacmanLoseLife();
+			Debug.Log("hit by Explosive");
 		}else if (trigger.gameObject.tag == "Teleport"){
 			//teleportScript.teleportPacman(trigger, pacmanObject);
+			teleporterScript.TeleportPacman(trigger);
+//-----------------------Poison----------------------------
+		}else if (trigger.gameObject.tag == "Poison"){
+			trigger.gameObject.SetActive(false);
+			PoisonCounter();
+			Debug.Log("hit by Poison");
 		}
 	}
 //------------------------Courage Active Timer-----------------
@@ -135,6 +146,7 @@ public class Connector : MonoBehaviour {
 		}else{
 			PacmanMoveScript.gameObject.SetActive(false);
 			PacmanMoveScript.TeleportToSpawnPoint();
+			ResetPoisonCount();
 			ghostMasterScript.ResetGhost();//teleports ghost to nest
 			InvokeRepeating("RespawnTimer",0, 1);
 		}
@@ -157,7 +169,7 @@ public class Connector : MonoBehaviour {
 //----------------Respawn Timer----------------------------
 	void RespawnTimer(){
 
-		if(respawnTime < 1){
+		if(respawnTime <= 1){
 			PacmanMoveScript.gameObject.SetActive(true);
 			ghostMasterScript.HuntGhost();
 			PrinterScript.PrintInfoNotingText();//Print Nothing in Info Text
@@ -207,6 +219,20 @@ public class Connector : MonoBehaviour {
 		PrinterScript.PrintPacmanLives(pacmanLives);
 		PrinterScript.PrintCourageNothing();
 		//PrinterScript.PrintMapTime();
+	}
+//---------------Poison Counter---------------
+	void PoisonCounter(){
+		if(poisonCount == 1){
+			PacmanLoseLife();
+			poisonCount = 4;	
+		}
+		else{
+			poisonCount = poisonCount -1;
+			PrinterScript.PrintInfoArrows("You been poisoned, take ", poisonCount, " more arrows and you are done");
+		}
+	}
+	void ResetPoisonCount(){
+		poisonCount = 4;
 	}
 
 	

@@ -104,20 +104,48 @@ public class pacmanMove : MonoBehaviour {
 		moveSpeed = normalSpeed;
 	}
 //----------------Remove pacman Speed---------------------
-	void DontMoveMethod(){
+	public void DontMoveMethod(){
 		moveSpeed = dontMove;
 	}
 //----------------Checks if Box HIt Wall--------------------- 
 	void BoxHitWall(){
 		//kontrollerar pacmans riktning och om riktningen är false.
-		if(dX == 0 && dZ == 1 && frontBool == false && savedTurn == 0){
+		if(dX == 0 && dZ == 1 && frontBool == false){
 			DontMoveMethod();
-		}else if(dX == 0 && dZ == -1 && backBool == false && savedTurn == 0){
+			if(savedTurn == 2 && backBool == true){
+				NormalSpeedMethod();
+			}else if(savedTurn == 3 && leftBool == true){
+				NormalSpeedMethod();
+			}else if(savedTurn == 4 && rightBool == true){
+				NormalSpeedMethod();
+			}
+		}else if(dX == 0 && dZ == -1 && backBool == false){
 			DontMoveMethod();
-		}else if(dX == -1 && dZ == 0 && leftBool == false && savedTurn == 0){
+			if(savedTurn == 1 && frontBool == true){
+				NormalSpeedMethod();
+			}else if(savedTurn == 3 && leftBool == true){
+				NormalSpeedMethod();
+			}else if(savedTurn == 4 && rightBool == true){
+				NormalSpeedMethod();
+			}
+		}else if(dX == -1 && dZ == 0 && leftBool == false){
 			DontMoveMethod();
-		}else if(dX == 1 && dZ == 0 && rightBool == false && savedTurn == 0){
+			if(savedTurn == 2 && backBool == true){
+				NormalSpeedMethod();
+			}else if(savedTurn == 1 && frontBool == true){
+				NormalSpeedMethod();
+			}else if(savedTurn == 4 && rightBool == true){
+				NormalSpeedMethod();
+			}
+		}else if(dX == 1 && dZ == 0 && rightBool == false){
 			DontMoveMethod();
+			if(savedTurn == 2 && backBool == true){
+				NormalSpeedMethod();
+			}else if(savedTurn == 3 && leftBool == true){
+				NormalSpeedMethod();
+			}else if(savedTurn == 1 && frontBool == true){
+				NormalSpeedMethod();
+			}
 		}
 
 	}
@@ -166,13 +194,13 @@ public class pacmanMove : MonoBehaviour {
 	void VisualPacmanMethod(float x, float z){
 		//roterar pacmans visuella gamobject i spelerens valda riktning
 		if(x == 0 && z == 1){
-			visualPacman.transform.localEulerAngles = new Vector3(0, 90, 0);
-		}else if(x == 0 && z == -1){
-			visualPacman.transform.localEulerAngles = new Vector3(0, 270, 0);
-		}else if(x == -1 && z == 0){
 			visualPacman.transform.localEulerAngles = new Vector3(0, 0, 0);
-		}else if(x == 1 && z == 0){
+		}else if(x == 0 && z == -1){
 			visualPacman.transform.localEulerAngles = new Vector3(0, 180, 0);
+		}else if(x == -1 && z == 0){
+			visualPacman.transform.localEulerAngles = new Vector3(0, 270, 0);
+		}else if(x == 1 && z == 0){
+			visualPacman.transform.localEulerAngles = new Vector3(0, 90, 0);
 		}
 	}
 //-----------------Return dX---------------------------
@@ -184,5 +212,10 @@ public class pacmanMove : MonoBehaviour {
 	public float ReturnDirectionZ(){
 		//körs från Ability Scripten för att avgöra riktningar
 		return dZ; 
+	}
+	public void directionFromAbility(){
+
+		DontMoveMethod();
+
 	}
 }

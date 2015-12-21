@@ -46,7 +46,7 @@ public class AbilityShield : MonoBehaviour {
 	}
 	IEnumerator ReturnToPacman(Vector3 dir){
 
-		yield return new WaitForSeconds(1.5f);
+		yield return new WaitForSeconds(2.5f);
 		if(willReturn == true){
 			//onReturn = true;
 			direction = -dir;
@@ -82,6 +82,14 @@ public class AbilityShield : MonoBehaviour {
 				ShieldInWall.gameObject.transform.position = new Vector3(transform.position.x - xyzInWall, transform.position.y, transform.position.z + xyzInWall);
 			}	
 	}
+	/*public float ReturnDX(){
+		Debug.Log("dx" + dX);
+		return dX;
+	}
+	public float ReturnDZ(){
+		Debug.Log("dx" + dZ);
+		return dZ;
+	}*/
 
 
 }
