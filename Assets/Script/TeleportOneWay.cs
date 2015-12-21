@@ -5,10 +5,13 @@ public class TeleportOneWay : MonoBehaviour {
 
 	public GameObject[] teleportEnterArray;
 	public GameObject[] teleportExitArray;
-	public GameObject pacmanMoveObject;
+	GameObject pacmanMoveObject;
+	Transform pacmanObject;
 	//pacmanMove pacmanMoveScript;
 
 	void Start () {
+		pacmanMoveObject = GameObject.FindGameObjectWithTag("FindPacmanObject");
+		pacmanObject = pacmanMoveObject.GetComponent<Transform>();
 		//pacmanMoveScript = pacmanMoveObject.GetComponent<pacmanMove>();
 	}
 	public void TeleportPacman(GameObject theTeleport){

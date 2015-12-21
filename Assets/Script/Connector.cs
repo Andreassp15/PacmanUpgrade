@@ -9,7 +9,7 @@ public class Connector : MonoBehaviour {
 	GameObject[] goldArray;
 	public GameObject[] diamondsArray;
 	public GameObject GhostMasterObject;
-	public GameObject pacmanObject;
+	GameObject pacmanObject;
 	//public GameObject teleporterObject;
 	//Teleporter teleporterScript;
 	public GameObject teleportOneWayObject;
@@ -33,6 +33,7 @@ public class Connector : MonoBehaviour {
 	Printer PrinterScript;
 
 	void Start () {
+		pacmanObject = GameObject.FindGameObjectWithTag("FindPacmanObject");
 		ghostMasterScript = GhostMasterObject.GetComponent<GhostMaster>();
 		PrinterScript = PrinterObject.GetComponent<Printer>();
 		PacmanMoveScript = pacmanObject.GetComponent<pacmanMove>();

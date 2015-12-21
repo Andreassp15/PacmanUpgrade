@@ -7,6 +7,7 @@ public class UseShield : MonoBehaviour {
 	public GameObject frontPoint;
 	public GameObject printerObject;
 	public GameObject pacmanMoveObject;
+	public GameObject throwShieĺdObject;
 	pacmanMove pacmanMoveScript;
 	AbilityShield abibiltyShieldScript;
 
@@ -22,13 +23,16 @@ public class UseShield : MonoBehaviour {
 		abibiltyShieldScript = theShield.GetComponent<AbilityShield>();
 		pacmanMoveScript = pacmanMoveObject.GetComponent<pacmanMove>();
 	}
-	
+	void FixedUpdate(){
+		
+	}
 
 	void Update () {
 
 	if(Input.GetKeyDown(KeyCode.Space) && coolDownOK == true && canTeleport == false && ownShield == true){
 			ownShield = false;
 			canTeleport = true;
+			throwShieĺdObject.SetActive(false);
 			theShield.transform.position = frontPoint.transform.position;
 			theShield.gameObject.SetActive(true);
 			abibiltyShieldScript.StartDirection();
@@ -65,6 +69,7 @@ public class UseShield : MonoBehaviour {
 		canTeleport = false;
 	}
 	public void OwnShield(){
+		throwShieĺdObject.SetActive(true);
 		ownShield = true;
 	}
 }

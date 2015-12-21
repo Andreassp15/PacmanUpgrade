@@ -26,7 +26,7 @@ public class AbilityMagnet : MonoBehaviour {
 		transform.position = new Vector3(pacmanObject.transform.position.x, pacmanObject.transform.position.y, pacmanObject.transform.position.z);				
 	}
 	void Update(){
-		if(Input.GetKeyDown(KeyCode.E) && abilityReady == true){
+		if(Input.GetKeyDown(KeyCode.Space) && abilityReady == true){
 			StartCoroutine(MagnetTimer());
 			abilityReady = false;
 

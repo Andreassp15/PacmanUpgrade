@@ -5,11 +5,15 @@ public class Teleporter : MonoBehaviour {
 
 	public GameObject[] enterArray;
 	public GameObject[] exitArray;
-	public Transform pacmanObject;
+	Transform pacmanObject;
+	GameObject pacmanGameObject;
 
 	//public GameObject connectorObject;
 	//Connector connectorScript;
 	void Start () {
+		pacmanGameObject = GameObject.FindGameObjectWithTag("FindPacmanObject");
+		pacmanObject = pacmanGameObject.GetComponent<Transform>();
+
 		//connectorScript = connectorObject.GetComponent<Connector>();
 
 	

@@ -6,10 +6,12 @@ using System.Collections;
 public class GhostDady : MonoBehaviour {
 
 	public GameObject[] ghostForms;
-	public GameObject pacman;
-	public Transform pacmanPosition;
+	GameObject pacman;
+	Transform pacmanPosition;
 	public GameObject nest;
 	public GameObject pointObject;
+
+	FindMeCollider findMeColliderScript;
 
 	public bool followTarget;
 	public bool randomDestination;
@@ -25,10 +27,18 @@ public class GhostDady : MonoBehaviour {
 
 	float distance = 20f;
 	float mySpeed = 3f;
+	int huntCount = 6;
 
 	Vector3 escapeVector;
 
 	void Start () {
+		pacman = GameObject.FindGameObjectWithTag("FindPacmanObject");
+		pacmanPosition = pacman.gameObject.GetComponent<Transform>();
+		//pacmanPosition = pacman.gameObject.transform.position;
+		//pacmanPosition = Transform.//FindGameObjectWithTag("FindPacmanObject");
+		findMeColliderScript = pointObject.GetComponent<FindMeCollider>();
+		RandomXRandomZ();
+		InvokeRepeating("RandomDestinationCounter", 0, 1);
 		theAgent = GetComponent<NavMeshAgent>();
 	}
 //-----------------Hunt----------------------
@@ -135,21 +145,9 @@ public class GhostDady : MonoBehaviour {
 		gameObject.GetComponent<NavMeshAgent>().speed = mySpeed;
 	}
 	void RandomDestinationMethod(){
-		//Debug.Log("in destMethod");
-		gameObject.GetComponent<NavMeshAgent>().SetDestination (pointObject.transform.position);
-		if(newRandom == true){
-			newRandom = false;
-			float x = Random.Range(-12, 12);
-			float z = Random.Range(-12, 12);
-			Vector3 point = new Vector3( x, 0, z);
-			pointObject.transform.position = point;
-			StartCoroutine(NewRandom());
-		}		
+		gameObject.GetComponent<NavMeshAgent>().SetDestination (pointObject.transform.position);	
 	}
-	IEnumerator NewRandom(){
-		yield return new WaitForSeconds(3);
-		newRandom = true;
-	}
+
 	void FollowAndRandomMethod(){
 		if(newRandom == true){
 			newRandom = false;
@@ -174,5 +172,26 @@ public class GhostDady : MonoBehaviour {
 		newRandom = true;
 		findPoint = true;
 	}
+//----------Random Points for RandomDestinationGhost-------
+	public void RandomDestinationCounter(){
+		if(huntCount < 1){
+			RandomXRandomZ();
+			huntCount = 6;
+		}else{
+			huntCount = huntCount -1;
+		}
+	}
+	public void RandomXRandomZ(){
+		findMeColliderScript.ResetInWall();
+		float x = Random.Range(-12, 12);
+		float z = Random.Range(-12, 12);
+		Vector3 point = new Vector3( x, 0, z);
+		pointObject.transform.position = point;
+
+		if(findMeColliderScript.ReturnInWall() == true){
+			RandomXRandomZ();
+		}
+	}
+
 
 }
