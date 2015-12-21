@@ -8,12 +8,12 @@ public class BombZoneActivator : MonoBehaviour
 
 
 	public GameObject bossActivated;
-		NewerBossEvent bossScript;
+	NewBossEvent bossScript;
 
 
 	void Start ()
 	{
-		bossScript = bossActivated.GetComponent<NewerBossEvent> ();
+		bossScript = bossActivated.GetComponent<NewBossEvent> ();
 	}
 
 	public void OnTriggerEnter (Collider col)
@@ -21,8 +21,7 @@ public class BombZoneActivator : MonoBehaviour
 
 		if (col.gameObject.tag == "Pacman") 
 		{
-			bossScript.ZoneActivated (transform.position);
-			bossActivated.SetActive (true);
+			bossScript.ZoneActivated (gameObject);
 			Debug.Log("Collided with the bomb zone");
 		}
 
