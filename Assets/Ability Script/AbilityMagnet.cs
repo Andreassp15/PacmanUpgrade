@@ -6,19 +6,24 @@ public class AbilityMagnet : MonoBehaviour {
 	public GameObject pacmanObject;
 	public GameObject printerObject;
 	Printer printerScript;
+	float duration = 100f;
 	int coolDown = 10;
 	bool abilityReady = true;
+	//bool enlarge = false;
+	//Transform myTransform;
 
 	void Start () {
 
 		printerScript = printerObject.GetComponent<Printer>();
-	
+		//myTransform = new Transform (gameObject.GetComponent<Transform>());
 	}
 	
 
-	void FixedUpdate () {
-		transform.position = new Vector3(pacmanObject.transform.position.x, pacmanObject.transform.position.y, pacmanObject.transform.position.z);
-	
+	void FixedUpdate () {/*
+		if(enlarge == true){
+			gameObject.transform.localScale = Vector3.Lerp(new Vector3(0, 0, 0), new Vector3(7, 7, 7), 100f / duration);
+		}*/
+		transform.position = new Vector3(pacmanObject.transform.position.x, pacmanObject.transform.position.y, pacmanObject.transform.position.z);				
 	}
 	void Update(){
 		if(Input.GetKeyDown(KeyCode.E) && abilityReady == true){
@@ -28,8 +33,20 @@ public class AbilityMagnet : MonoBehaviour {
 		}
 	}
 	IEnumerator MagnetTimer(){
-		gameObject.GetComponent<Transform>().localScale = new Vector3(7, 7, 7);
+		//enlarge = true;
+	/*	do{
+			gameObject.transform.localScale = Vector3.Lerp(new Vector3(0, 0,0), new Vector3(7, 7, 7), Time.deltaTime * duration);
+			yield return null;
+			tag += Time.deltaTime;
+		}while(Time.deltaTime < duration);
+			gameObject.transform.localScale =
+			yield break;*/
+		
+
+		gameObject.GetComponent<Transform>().localScale = new Vector3(8, 8, 8);
+		//gameObject.GetComponent<Transform>().localScale = gameObject.GetComponent<Transform>().localScale.Lerp(new Vector3(0, 0,0), new Vector3(7, 7, 7), Time.deltaTime * duration);
 		yield return new WaitForSeconds(3f);
+		//enlarge = false;
 		gameObject.GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
 		InvokeRepeating("coolDownTimer", 0, 1);
 	}
