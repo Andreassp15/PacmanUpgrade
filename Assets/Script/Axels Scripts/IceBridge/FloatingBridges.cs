@@ -13,6 +13,9 @@ public class FloatingBridges : MonoBehaviour {
 	private GameObject[] mySiblings;
 	private static List<int> downedBridges;//denna fick bli en List för att antalet kommer variera och List är enkla att variera längden på.
 
+	private Material bridgeMaterial;
+	private Material bridgeDownMaterial;
+
 	private bool needHelp; //<--Denna bool blir true om en annan bro har fallit, alltså inte mamman som har scriptet på sig.
 	private bool bridgeDown;//<--Denna blir true om mamman med scriptet på sig nyss fallit.
 
@@ -23,6 +26,9 @@ public class FloatingBridges : MonoBehaviour {
 
 
 	void Start () {
+
+		bridgeMaterial = Resources.Load("W2_ElsaBridge") as Material;
+		bridgeDownMaterial = Resources.Load("Nothing") as Material;
 
 		howManyKids = gameObject.transform.childCount;
 
@@ -56,8 +62,10 @@ public class FloatingBridges : MonoBehaviour {
 
 	public void LetItFall(int o) //Denna metod anropar barnen när de faller. När alla barn ramlat kommer den kolla ifall någon bro ska räddas.
 	{
-		child_BridgePieceCollider[o].gameObject.transform.GetChild(0).GetComponent<Rigidbody>().useGravity = true; //alla brodelar ska bli påverkade av gravity och sluta vara kinematic.
-		child_BridgePieceCollider[o].gameObject.transform.GetChild(0).GetComponent<Rigidbody>().isKinematic = false;
+		if(bridgeDown == false)
+		{
+			child_BridgePieceCollider[o].gameObject.transform.GetChild(0).GetComponent<MeshRenderer>().sharedMaterial = bridgeDownMaterial; // Materialet försvinner så att bron inte syns.
+		child_BridgePieceCollider[o].gameObject.transform.GetChild(1).GetComponent<ParticleSystem>().Emit(50);
 
 		piecesDown++;
 
@@ -70,6 +78,7 @@ public class FloatingBridges : MonoBehaviour {
 			SavingPrivateBridge(); //Om en bro ska räddas kommer denna metod köras.
 			}
 		}
+	}
 	}
 	private bool WillISaveSome1() //Ganska enkelt, ifall variabeln random blir något under 40 kommer true att retuneras.
 	{
@@ -117,8 +126,7 @@ public class FloatingBridges : MonoBehaviour {
 	}
 	void BeamMeUp(int o) //Här gör jag så att brodelarna inte blir påverkade av gravity och blir kinematic.
 	{
-		child_BridgePieceCollider[o].gameObject.transform.GetChild(0).GetComponent<Rigidbody>().useGravity = false;
-		child_BridgePieceCollider[o].gameObject.transform.GetChild(0).GetComponent<Rigidbody>().isKinematic = true;
+		child_BridgePieceCollider[o].gameObject.transform.GetChild(0).GetComponent<MeshRenderer>().sharedMaterial = bridgeMaterial;
 
 		child_BridgePieceCollider[o].gameObject.transform.GetChild(0).transform.position = originalPositions[o]; // brodelarna har fått sina ursprungliga värden för position och rotation sparade, som de nu
 		child_BridgePieceCollider[o].gameObject.transform.GetChild(0).transform.rotation = originalRotation[o]; //blir återställde till.

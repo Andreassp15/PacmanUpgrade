@@ -31,7 +31,7 @@ public class BabyBridgePiece : MonoBehaviour {
 
 		}
 	}
-	void OnTriggerEnter(Collider col)
+	void OnTriggerExit(Collider col)
 	{
 		
 		if(col.gameObject.tag == ("Pacman"))
