@@ -1,47 +1,41 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class ValAvBana : MonoBehaviour
 {
     public GameObject Sub1, Sub2, Sub3;
     private bool toggle1, toggle2, toggle3 = false;
-   /* private string[] map = new string[30];
-    private GameObject[] buttons;
+   	private string[] map = new string[30];
+	private List<string> buttons;
+
+	private string buttonClicked;
    
 
 
     public void Start()
     {
+		buttons = new List<string>();
+
+		for(int i = 0; i < 10; i++)
+		{
+			buttons.Add(transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.transform.GetChild(i).gameObject.name);
+		}
+		for(int i = 0; i < 10; i++)
+		{
+			buttons.Add(transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.transform.GetChild(i).gameObject.name);
+		}
+		for(int i = 0; i < 10; i++)
+		{
+			buttons.Add(transform.GetChild(2).gameObject.transform.GetChild(1).gameObject.transform.GetChild(i).gameObject.name);
+		}
 
 
-        buttons = GameObject.FindGameObjectsWithTag("Button");
-        for (int i = 1; i < map.Length; i++)
-        {
-            map[i] = "Map_" + i.ToString();
-        }
+
+
+
     }
-
-    public void mapChoice()
-    {
-        Debug.Log(gameObject.name);
-        
-        for(int i = 1; i < buttons.Length; i++ )
-        {
-            //Debug.Log(buttons[i]);
-            if(gameObject.name + " (UnityEngine.GameObject)" == buttons[i].name)
-            {
-                Application.LoadLevel(i);
-            } else { Debug.Log(gameObject.name + " (UnityEngine.GameObject)" + "is not equal to" + buttons[i]); }
-
-        }
-        //Application.LoadLevel(gameObject.name);
-
-       
-
-        
-        
-    }*/
 
     public void World1()
     {
@@ -105,6 +99,30 @@ public class ValAvBana : MonoBehaviour
             toggle3 = false;
         }
     }
+
+	public void SelectMap()
+	{
+
+		for(int i = 0; i < buttons.Count; i++)
+		{
+
+			Debug.Log(buttons[i]);
+
+			if(buttons[i] == buttonClicked)
+			{
+
+				SceneManager.LoadScene("Map_" + (i + 1).ToString());
+			}
+		}
+	}
+
+	public void WhoIsClicked(string o)
+	{
+		buttonClicked = o;
+
+
+	}
+
 
     public void Startmeny()
     {
