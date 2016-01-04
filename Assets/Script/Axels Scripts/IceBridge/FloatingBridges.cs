@@ -24,6 +24,8 @@ public class FloatingBridges : MonoBehaviour {
 	private int piecesDown; //Jag använder den här för att scriptet ska veta när den har tappat alla sina delar. När pieces down är lika många som howManyKids vet man att bron har ramlat ner.
 	private int myNumber;//mamman har en massa syskon. Vi vill veta vilken plats hon har i mySiblings arrayn.
 
+	private int bridgesFallenAfterMe;
+
 
 	void Start () {
 
@@ -62,60 +64,44 @@ public class FloatingBridges : MonoBehaviour {
 
 	public void LetItFall(int o) //Denna metod anropar barnen när de faller. När alla barn ramlat kommer den kolla ifall någon bro ska räddas.
 	{
+
+
+
 		if(bridgeDown == false)
 		{
 			child_BridgePieceCollider[o].gameObject.transform.GetChild(0).GetComponent<MeshRenderer>().sharedMaterial = bridgeDownMaterial; // Materialet försvinner så att bron inte syns.
-		child_BridgePieceCollider[o].gameObject.transform.GetChild(1).GetComponent<ParticleSystem>().Emit(50);
+			child_BridgePieceCollider[o].gameObject.transform.GetChild(1).GetComponent<ParticleSystem>().Emit(50);
 
 		piecesDown++;
 
 		if(piecesDown == howManyKids)
 		{
-			
-			bridgeDown = true;
-			if(WillISaveSome1())
-			{
-			SavingPrivateBridge(); //Om en bro ska räddas kommer denna metod köras.
+				piecesDown = 0;
+				downedBridges.Add(myNumber);
+
+
+						if(downedBridges.Count >= 5)
+						{
+
+							SavingPrivateBridge(downedBridges[0]); //WillSaveSome1 berättar nr bron har som väntat på fyra broar som ska falla.
+							
+				
+				}
+	
 			}
 		}
 	}
-	}
-	private bool WillISaveSome1() //Ganska enkelt, ifall variabeln random blir något under 40 kommer true att retuneras.
-	{
-		int random;
 
-		random = Random.Range(1,100);
-
-		if(random < 40)
-		{
-			return(true);
-		}
-		else
-		{
-			return(false);
-		}
-	}
-
-	public void SavingPrivateBridge() // Här måste man kolla vilka broar som är nere. De som visar att de är nere kommer hamna i en lista.
+	public void SavingPrivateBridge(int o) // Här tar den emot gameobjectet av bron som kan byggas upp och kör metoden TheChosenOne.
 	{
 
-		for(int i = 0; i < mySiblings.Length; i++)
-		{
-			
-			needHelp = mySiblings[i].GetComponent<FloatingBridges>().MyStatus();
+		mySiblings[o].GetComponent<FloatingBridges>().TheChosenOne();
 
+		downedBridges.Remove(o);
 
-			if(needHelp == true && i != myNumber) //Sitt eget nummer hamnar inte i listan.
-			{
-				downedBridges.Add(i);
-			}
-		}
-			
-		mySiblings[downedBridges[Random.Range(0, downedBridges.Count)]].GetComponent<FloatingBridges>().TheChosenOne(); //En väljs ut av de som har fallit.
-		downedBridges.Clear();
-	}
+    }
 
-	void TheChosenOne() //När en bro blir räddad vill vi att den inte säger att den fallit längre. BeamMeUp kommer köras för varje barn, brodel.
+	void TheChosenOne() //När en bro blir räddad vill vi att den inte säger att den fallit längre. BeamMeUp kommer köras för varje barn.
 	{
 		bridgeDown = false;
 
@@ -124,7 +110,7 @@ public class FloatingBridges : MonoBehaviour {
 			BeamMeUp(i);
 		}
 	}
-	void BeamMeUp(int o) //Här gör jag så att brodelarna inte blir påverkade av gravity och blir kinematic.
+	void BeamMeUp(int o) //Jag gör brodelarna synliga igen, ger tillbaka deras material.
 	{
 		child_BridgePieceCollider[o].gameObject.transform.GetChild(0).GetComponent<MeshRenderer>().sharedMaterial = bridgeMaterial;
 
@@ -149,5 +135,4 @@ public class FloatingBridges : MonoBehaviour {
 			}
 		}
 	}
-
 }

@@ -31,6 +31,8 @@ public class BabyBridgePiece : MonoBehaviour {
 
 		}
 	}
+		
+
 	void OnTriggerExit(Collider col)
 	{
 		
@@ -40,6 +42,4 @@ public class BabyBridgePiece : MonoBehaviour {
 			mama.LetItFall(whoAmI);
 		}
 	}
-	
-
 }
