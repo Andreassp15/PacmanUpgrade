@@ -4,12 +4,14 @@ using System.Collections;
 public class TheCamera : MonoBehaviour {
 
 	//public GameObject cameraLookAt;
-	public Transform target;
+	Transform target;
+	GameObject pacmanObject;
 
 	
 	// Use this for initialization
 	void Start () {
-		
+		pacmanObject = GameObject.FindGameObjectWithTag("FindPacmanObject");
+		target = pacmanObject.gameObject.GetComponent<Transform>();
 
 	}
 
