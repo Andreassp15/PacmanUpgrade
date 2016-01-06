@@ -23,7 +23,9 @@ public class AudioPlayer : MonoBehaviour {
 	public AudioSource pause;
 
 	public AudioSource fireArrow;
+	public AudioSource arrowHit;
 	public AudioSource explosion;
+	public AudioSource burnExplosion;
 
 	public AudioSource fireOrbCanon;
 	public AudioSource buttonPress;
@@ -44,6 +46,7 @@ public class AudioPlayer : MonoBehaviour {
 	public AudioSource shieldToss;
 	public AudioSource shieldHitWall;
 	public AudioSource shieldReturned;
+	public AudioSource shieldTeleport;
 	public AudioSource magnetEnlarge;
 	public AudioSource magnetShrink;
 	public AudioSource magnetHitExplosive;
@@ -104,8 +107,14 @@ public class AudioPlayer : MonoBehaviour {
 	public void FireArrowMethod(){
 		fireArrow.Play();
 	}
+	public void ArrowHItMethod(){
+		arrowHit.Play();
+	}
 	public void ExplosionMethod(){
 		explosion.Play();
+	}
+	public void BurnExplosionMethod(){
+		burnExplosion.Play();
 	}
 	public void FireOrbCanonMethod(){
 		fireOrbCanon.Play();
@@ -154,6 +163,9 @@ public class AudioPlayer : MonoBehaviour {
 	}
 	public void ShieldReturnedMethod(){
 		shieldReturned.Play();
+	}
+	public void ShieldTeleportMethod(){
+		shieldTeleport.Play();
 	}
 	public void MagnetEnlargeMethod(){
 		magnetEnlarge.Play();

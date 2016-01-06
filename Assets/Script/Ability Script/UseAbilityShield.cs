@@ -8,7 +8,9 @@ public class UseAbilityShield : MonoBehaviour {
 	public GameObject handShiledObject;
 	public GameObject pacmanMoveObject;
 	public GameObject frontPoint;
+	public GameObject audioPlayerObject;
 
+	AudioPlayer audioPlayerScript;
 	AbilityMaster abilityMasterScript;
 	ThrowShiled throwShieldScript;
 	pacmanMove pacmanMoveScript;
@@ -23,6 +25,7 @@ public class UseAbilityShield : MonoBehaviour {
 	bool canTeleport = false;
 
 	void Start () {
+		audioPlayerScript = audioPlayerObject.GetComponent<AudioPlayer>();
 		pacmanMoveScript = pacmanMoveObject.GetComponent<pacmanMove>();
 		throwShieldScript = throwShieldObject.GetComponent<ThrowShiled>();
 		abilityMasterScript = abilityMasterObject.GetComponent<AbilityMaster>();
@@ -41,10 +44,14 @@ public class UseAbilityShield : MonoBehaviour {
 			abilityMasterScript.StartAbility();
 			GetDirectionForShield();
 			throwShieldScript.StartDirections(direction);
+			audioPlayerScript.ShieldTossMethod();
 		}else if(Input.GetKeyDown(KeyCode.Space) && ownShield == false && canTeleport == true){
 			pacmanMoveScript.DontMoveMethod();
 			pacmanMoveObject.transform.position = throwShieldObject.transform.position;
 			canTeleport = true;
+			audioPlayerScript.ShieldTeleportMethod();
+		}else if(Input.GetKeyDown(KeyCode.Space) && abilityMasterScript.ReturnAbilityReady() == false && canTeleport == false){
+			audioPlayerScript.AbilityNotReadyMethod();
 		}
 	
 	}
@@ -56,6 +63,7 @@ public class UseAbilityShield : MonoBehaviour {
 		throwShieldObject.SetActive(false);
 		handShiledObject.SetActive(true);
 		canTeleport = false;
+		audioPlayerScript.ShieldReturnedMethod();
 	}
 	void GetDirectionForShield(){
 		dX = pacmanMoveScript.ReturnDirectionX();

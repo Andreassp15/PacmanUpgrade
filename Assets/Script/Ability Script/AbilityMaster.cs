@@ -19,7 +19,7 @@ public class AbilityMaster : MonoBehaviour {
 	GameObject abilityObject;
 	GameObject pacmanObject;
 
-	int abilityCooldown = 10;
+	int abilityCooldown;
 	int poweredAbility = 0; 
 
 	bool abilityReady = true;
@@ -36,6 +36,8 @@ public class AbilityMaster : MonoBehaviour {
 		printerScript = printeObject.GetComponent<Printer>();
 		connectorScript = connectorObject.GetComponent<Connector>();
 		pacmanObject = GameObject.FindGameObjectWithTag("FindPacmanObject");
+		printerScript.PrintPowerCharges(poweredAbility);
+		printerScript.AbilityCoolDownText(abilityCooldown);
 
 		ActivateAbility();
 	
@@ -74,10 +76,12 @@ public class AbilityMaster : MonoBehaviour {
 		abilityReady = false;
 	}
 	public void StartAbilityCooldown(){
+		abilityCooldown = 10;
 		InvokeRepeating("CooldownCounter", 0, 1);
 	}
 	void CooldownCounter(){
 		if(abilityCooldown < 1){
+			audioPlayerScript.AbilityReadyMethod();
 			abilityCooldown = 10;
 			CancelInvoke("CooldownCounter");
 			abilityReady = true;
@@ -91,19 +95,26 @@ public class AbilityMaster : MonoBehaviour {
 
 	public void IncreasePoweredAbility(int i){
 		poweredAbility = poweredAbility + i;
+		printerScript.PrintPowerCharges(poweredAbility);
 	}
 	public void DecreasePoweredAbility(int i){
 		if(poweredAbility >= 1){
 			poweredAbility = poweredAbility -i;
+			printerScript.PrintPowerCharges(poweredAbility);
 		}
 	}
 	void Update () {
-		if(Input.GetKeyDown(KeyCode.E) && poweredAbility >= 1){
+		if(Input.GetKeyDown(KeyCode.E) && poweredAbility >= 1 && abilityReady == true){
 			audioPlayerScript.PacmanActivatePowerMethod();
 			DecreasePoweredAbility(1);
 			poweredAbilityReady = true;
 			ActivatePowerVisual();
-
+		}else if (Input.GetKeyDown(KeyCode.E) && poweredAbility >= 1 && abilityReady == false){
+			printerScript.PrintInfoText("Ability must be ready");
+			audioPlayerScript.AbilityNotReadyMethod();
+		}else if(Input.GetKeyDown(KeyCode.E) && poweredAbility == 0){
+			printerScript.PrintInfoText("You must aquire a Power Charge to power you ability");
+			audioPlayerScript.AbilityNotReadyMethod();
 		}
 	}
 	void ActivatePowerVisual(){
