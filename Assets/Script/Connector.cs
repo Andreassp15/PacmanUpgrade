@@ -7,11 +7,23 @@ using System.Collections;
 public class Connector : MonoBehaviour {
 
 	GameObject[] goldArray;
+	public GameObject abilityMasterObject;
 	public GameObject[] diamondsArray;
 	public GameObject GhostMasterObject;
-	public GameObject pacmanObject;
+	public GameObject audioPlayerObject;
+	GameObject pacmanObject;
+	public GameObject MeteorMasterObject;
+	public GameObject teleportOneWayObject;
+	public GameObject pacmanKaiObject;
+	public GameObject pacmanJonObject;
+	public GameObject pacmanNicklasObject;
+	MeteorMaster meteorMasterScript;
+	TeleportOneWay teleportOneWayScript;
 	GhostMaster ghostMasterScript;
 	pacmanMove PacmanMoveScript;
+	AbilityMaster abilityMasterScript;
+	AudioPlayer audioPlayerScript;
+	int poisonCount = 4;
 	int maxGold;
 	int gold;
 	int score;
@@ -26,11 +38,26 @@ public class Connector : MonoBehaviour {
 
 	public GameObject PrinterObject;
 	Printer PrinterScript;
+	/*void Awake(){
+		pacmanNumber = heroPickScript.ReturnPacmanNumber();
+		if(pacmanNumber == 1){
+			pacmanKaiObject.SetActive(true);
+		}else if(pacmanNumber == 2){
+			pacmanJonObject.SetActive(true);
+		}else if(pacmanNumber == 3){
+			pacmanNicklasObject.SetActive(true);
+		}
+	}*/
 
 	void Start () {
+		audioPlayerScript = audioPlayerObject.GetComponent<AudioPlayer>();
+		abilityMasterScript = abilityMasterObject.GetComponent<AbilityMaster>();
+		meteorMasterScript = MeteorMasterObject.GetComponent<MeteorMaster>();
+		pacmanObject = GameObject.FindGameObjectWithTag("FindPacmanObject");
 		ghostMasterScript = GhostMasterObject.GetComponent<GhostMaster>();
 		PrinterScript = PrinterObject.GetComponent<Printer>();
 		PacmanMoveScript = pacmanObject.GetComponent<pacmanMove>();
+		teleportOneWayScript = teleportOneWayObject.GetComponent<TeleportOneWay>();
 
 		FindGoldAmount();
 		maxGold = goldArray.Length;
@@ -45,12 +72,13 @@ public class Connector : MonoBehaviour {
 //-----------------------Hit Gold------------------------------
 		if(trigger.gameObject.tag == "Gold"){
 			trigger.gameObject.SetActive(false);
+			audioPlayerScript.EatGoldMethod();
 			AddGoldMethod(1);
 //-----------------------Hit Courage--------------------------
 		}else if(trigger.gameObject.tag == "Courage"){
-			trigger.gameObject.SetActive(false);
+			trigger.gameObject.transform.parent.gameObject.SetActive(false);
+			audioPlayerScript.EatCourageMethod();
 			int courageBonus = 15;
-
 			if(courageActive == false){
 				courageActive = true;
 				InvokeRepeating("CourageActiveTimer", 0, 1);
@@ -62,7 +90,8 @@ public class Connector : MonoBehaviour {
 //------------------------Hit Diamonds-------------------------
 		}else if(trigger.gameObject.tag == "Diamond"){
 			AddScoreMethod(10);
-			trigger.gameObject.SetActive(false);
+			audioPlayerScript.EatDiamondMethod();
+			trigger.gameObject.transform.parent.gameObject.SetActive(false);
 			//add coins for buying extra powertime/hp/speed
 
 //------------------------Hit Ghost Hunt-----------------------
@@ -77,9 +106,21 @@ public class Connector : MonoBehaviour {
 
 //------------------------Explosives--------------------------
 		}else if(trigger.gameObject.tag == "Explosives"){
-			//pacman hurt
+			PacmanLoseLife();
+			Debug.Log("hit by Explosive");
 		}else if (trigger.gameObject.tag == "Teleport"){
 			//teleportScript.teleportPacman(trigger, pacmanObject);
+			//teleporterScript.TeleportPacman(trigger);
+			teleportOneWayScript.TeleportPacman(trigger);
+//-----------------------Poison----------------------------
+		}else if (trigger.gameObject.tag == "Poison"){
+			trigger.gameObject.SetActive(false);
+			PoisonCounter();
+			Debug.Log("hit by Poison");
+		}else if( trigger.gameObject.tag == "PowerCharge"){
+			abilityMasterScript.IncreasePoweredAbility(1);
+			trigger.gameObject.transform.parent.gameObject.SetActive(false);
+			audioPlayerScript.EatPowerChargeMethod();
 		}
 	}
 //------------------------Courage Active Timer-----------------
@@ -104,7 +145,7 @@ public class Connector : MonoBehaviour {
 	}
 //--------------------------Spawn Diamonds-------------------
 	void SpawnDiamonds(){
-		//text a diamond has spanwed!
+		//text a diamond has spawned!
 		int randomDiamond = Random.Range(0, diamondsArray.Length);
 		diamondsArray[randomDiamond].SetActive(true);
 		StartCoroutine(deactivateDiamond(randomDiamond));
@@ -120,6 +161,10 @@ public class Connector : MonoBehaviour {
 		FindGoldAmount();
 		int goldLeft = goldArray.Length;
 		PrinterScript.PrintGoldLeft(goldLeft);//send goldLeft to printer for print
+
+		if(gold == maxGold){
+			VictoryMethod();
+		}
 	}
 //---------------------------Add Score---------------------------
 	void AddScoreMethod(int amount){
@@ -133,8 +178,10 @@ public class Connector : MonoBehaviour {
 		if(pacmanLives <= 1){
 			GameOverMethod();
 		}else{
+			meteorMasterScript.ResetMeteors();
 			PacmanMoveScript.gameObject.SetActive(false);
 			PacmanMoveScript.TeleportToSpawnPoint();
+			ResetPoisonCount();
 			ghostMasterScript.ResetGhost();//teleports ghost to nest
 			InvokeRepeating("RespawnTimer",0, 1);
 		}
@@ -157,7 +204,7 @@ public class Connector : MonoBehaviour {
 //----------------Respawn Timer----------------------------
 	void RespawnTimer(){
 
-		if(respawnTime < 1){
+		if(respawnTime <= 1){
 			PacmanMoveScript.gameObject.SetActive(true);
 			ghostMasterScript.HuntGhost();
 			PrinterScript.PrintInfoNotingText();//Print Nothing in Info Text
@@ -208,13 +255,27 @@ public class Connector : MonoBehaviour {
 		PrinterScript.PrintCourageNothing();
 		//PrinterScript.PrintMapTime();
 	}
-
-	
-	
-	
-	
-	
-	void Update () {
-	
+//---------------Poison Counter---------------
+	void PoisonCounter(){
+		if(poisonCount == 1){
+			PacmanLoseLife();
+			poisonCount = 4;	
+		}
+		else{
+			poisonCount = poisonCount -1;
+			PrinterScript.PrintInfoArrows("You been poisoned, take ", poisonCount, " more arrows and you are done");
+		}
 	}
+	void ResetPoisonCount(){
+		poisonCount = 4;
+	}
+
+
+//-----------------Powered Ability Hit Something-----------------------------
+	public void PoweredAbilityHitSomething(GameObject trigger){
+		if(trigger.gameObject.tag == "GhostFlee" || trigger.gameObject.tag == "GhostHunt"){
+			ghostMasterScript.DeadGhost(trigger);
+		}
+	}
+		
 }

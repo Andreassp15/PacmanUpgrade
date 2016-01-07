@@ -97,14 +97,13 @@ public class pacmanMove : MonoBehaviour {
 				savedTurn = 4;
 			}
 		}
-	
 	}
 //----------------Give Pacman Speed-----------------
 	void NormalSpeedMethod(){
 		moveSpeed = normalSpeed;
 	}
 //----------------Remove pacman Speed---------------------
-	void DontMoveMethod(){
+	public void DontMoveMethod(){
 		moveSpeed = dontMove;
 	}
 //----------------Checks if Box HIt Wall--------------------- 
@@ -212,5 +211,17 @@ public class pacmanMove : MonoBehaviour {
 	public float ReturnDirectionZ(){
 		//körs från Ability Scripten för att avgöra riktningar
 		return dZ; 
+	}
+	public void directionFromAbility(){
+		DontMoveMethod();
+	}
+	public void ActivatePacmanFalling(){
+		gameObject.GetComponent<Rigidbody>().isKinematic = false;
+		DontMoveMethod();
+		gameObject.GetComponent<Rigidbody>().useGravity = true;
+	}
+	public void DeactivatePacmanFalling(){
+		gameObject.GetComponent<Rigidbody>().useGravity = false;
+		gameObject.GetComponent<Rigidbody>().isKinematic = true;
 	}
 }
