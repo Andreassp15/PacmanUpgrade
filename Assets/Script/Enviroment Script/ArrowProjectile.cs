@@ -1,7 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+//------------------Programmerare Sp15 Ludvig Emtås-------------------
+//**********************************************************************
+//Scriptet sitter på varje Arrow. och skjuter dem frammot i bestämd riktning.
+//**********************************************************************
 
 public class ArrowProjectile : MonoBehaviour {
+
+	public GameObject audioPlayerObject;
+	AudioPlayer audioPlayerScript;
 
 	Vector3 direction;
 	float moveSpeed = 0.1f;
@@ -10,7 +17,7 @@ public class ArrowProjectile : MonoBehaviour {
 	public float z;
 
 	void Start () {
-	
+		audioPlayerScript = audioPlayerObject.GetComponent<AudioPlayer>();
 	}
 	
 
@@ -20,6 +27,7 @@ public class ArrowProjectile : MonoBehaviour {
 	}
 	void OnTriggerEnter(Collider trigger){
 		if(trigger.gameObject.tag == "Wall"){
+			audioPlayerScript.ArrowHItMethod();
 			gameObject.SetActive(false);
 		}
 

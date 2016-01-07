@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 public class capsuleRotation : MonoBehaviour {
+//------------------Programmerare Sp15 Ludvig Emtås-------------------
 //********************************************************************************
 //scriptet ä till fär att ge lite rörlse till de object pacman ska sammla
 //********************************************************************************

@@ -8,10 +8,12 @@ public class ThrowShiled : MonoBehaviour {
 	public GameObject rotateShiledObject;
 	public GameObject inWallShiledObject;
 	public GameObject connectorObject;
+	public GameObject audioPlayerObject;
 
 	Connector connectorObjectScript;
 	AbilityMaster abilityMasterScript;
 	UseAbilityShield useAbilityShieldScript;
+	AudioPlayer audioPlayerScript;
 
 	Vector3 direction;
 	float moveSpeed = 0.1f;
@@ -24,6 +26,7 @@ public class ThrowShiled : MonoBehaviour {
 		connectorObjectScript = connectorObject.GetComponent<Connector>();
 		useAbilityShieldScript = useAbilityShieldObject.GetComponent<UseAbilityShield>();
 		abilityMasterScript = abilityMasterObject.GetComponent<AbilityMaster>();
+		audioPlayerScript = audioPlayerObject.GetComponent<AudioPlayer>();
 	
 	}
 	public void StartDirections(Vector3 theDirection){
@@ -53,6 +56,7 @@ public class ThrowShiled : MonoBehaviour {
 			PushShieldIntoWall();
 			direction = new Vector3(0, 0, 0);
 			willReturn = false;
+			audioPlayerScript.ShieldHitWall();
 
 		}else if(trigger.gameObject.tag == "Pacman"){
 			abilityMasterScript.StartAbilityCooldown();
