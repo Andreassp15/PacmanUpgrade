@@ -7,6 +7,9 @@ public class CanonDaddy : MonoBehaviour {
 	public GameObject[] explosionArray;
 	public GameObject visualOrbObject;
 	public GameObject visualSparksObject;
+	public GameObject audioPlayerObject;
+
+	AudioPlayer audioPlayerScript;
 
 	float riseSpeed = 1.2f;
 	float enlargeSpeed = 1.5f;
@@ -25,7 +28,8 @@ public class CanonDaddy : MonoBehaviour {
 	float dY;
 	float dZ;
 
-	void Start () {			
+	void Start () {		
+		audioPlayerScript = audioPlayerObject.GetComponent<AudioPlayer>();	
 	}
 	public void FireCanonBalls(){
 		if(alreadyShooting == false){
@@ -58,6 +62,7 @@ public class CanonDaddy : MonoBehaviour {
 	void FireCanon(){
 		
 		if(canonBallsAmount < canonBallArray.Length){
+			audioPlayerScript.FireOrbCanonMethod();
 			RandomFloats();
 			randomDirection = new Vector3(dX, dY, dZ);
 			canonBallArray[canonBallsAmount].transform.position = transform.position;

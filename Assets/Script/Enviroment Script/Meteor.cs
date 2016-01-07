@@ -8,9 +8,13 @@ public class Meteor : MonoBehaviour {
 	float meteorSpeed = 0.05f;
 	float stopSpeed = 0f;
 	public GameObject explode;
+	public GameObject audioPlayerObject;
+
+	AudioPlayer audioPlayerScript;
 
 	void Start () {
 		moveSpeed = meteorSpeed;
+		audioPlayerScript = audioPlayerObject.GetComponent<AudioPlayer>();
 	}
 	
 
@@ -20,6 +24,7 @@ public class Meteor : MonoBehaviour {
 	}
 	void OnTriggerEnter(Collider trigger){
 		gameObject.GetComponent<SphereCollider>().radius = 2;
+		audioPlayerScript.ExplosionMethod();
 		gameObject.GetComponent<Renderer>().enabled = false;
 		moveSpeed = stopSpeed;
 		explode.gameObject.SetActive(true);
@@ -27,6 +32,7 @@ public class Meteor : MonoBehaviour {
 		//gameObject.SetActive(false);
 	}
 	IEnumerator ExplosiveTime(){
+		audioPlayerScript.BurnExplosionMethod();
 		yield return new WaitForSeconds(2f);
 		explode.gameObject.SetActive(false);
 		gameObject.SetActive(false);
