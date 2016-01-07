@@ -25,7 +25,7 @@ public class AreYouSurePanel : MonoBehaviour {
 		messagesList.Add("Only dirt peasents return to Main Menu...");
 		messagesList.Add("If you quit you will lose all your progress and your parents will be very disappointed...");
 		messagesList.Add("Going back to Main Menu? But you were doing so good!The world needs you to collect coins!");
-		messagesList.Add("May the coin collector force be with you, allways...");
+		messagesList.Add("May the coin collector force be with you, always...");
 	
 		messagesList.Add("Excellent work, but there is more coins to collect."); 										// <--- 5
 		messagesList.Add("Wow! Never have I seen such good walking forward");
