@@ -18,8 +18,8 @@ public class Connector : MonoBehaviour {
 	public GameObject pacmanKaiObject;
 	public GameObject pacmanJonObject;
 	public GameObject pacmanNicklasObject;
-	//public GameObject resultsObject;
-	//Results resultsScript;
+	public GameObject resultsObject;
+	Results resultsScript;
 	MeteorMaster meteorMasterScript;
 	TeleportOneWay teleportOneWayScript;
 	GhostMaster ghostMasterScript;
@@ -42,20 +42,22 @@ public class Connector : MonoBehaviour {
 
 	public GameObject PrinterObject;
 	Printer PrinterScript;
-	/*void Awake(){
-		pacmanNumber = heroPickScript.ReturnPacmanNumber();
+	void Awake(){
+		GameObject selectObject = GameObject.Find("SelectionInfo");
+		int pacmanNumber = selectObject.gameObject.GetComponent<SelectionInfo>().WhatCharacter();
 		if(pacmanNumber == 1){
 			pacmanKaiObject.SetActive(true);
 		}else if(pacmanNumber == 2){
-			pacmanJonObject.SetActive(true);
-		}else if(pacmanNumber == 3){
 			pacmanNicklasObject.SetActive(true);
+		}else if(pacmanNumber == 3){
+			pacmanJonObject.SetActive(true);
+
 		}
-	}*/
+	}
 
 	void Start () {
 		mapTime = startMapTime;
-		//resultsScript = resultsObject.GetComponent<Results>();
+		resultsScript = resultsObject.GetComponent<Results>();
 		audioPlayerScript = audioPlayerObject.GetComponent<AudioPlayer>();
 		abilityMasterScript = abilityMasterObject.GetComponent<AbilityMaster>();
 		meteorMasterScript = MeteorMasterObject.GetComponent<MeteorMaster>();
@@ -231,7 +233,8 @@ public class Connector : MonoBehaviour {
 		string gameOver = "GAME OVER";
 		PrinterScript.PrintImportantInfo(gameOver);//send text to Printer for print
 		audioPlayerScript.GameOverMethod();
-		//resultsScript.TurnOnVictoryPanel(score, (startMapTime - maptime));
+		int scoreTime = startMapTime -mapTime;
+		resultsScript.TurnOnGameOverPanel(score, scoreTime);
 	}
 //-----------Player Won-----------------------
 	void VictoryMethod(){
@@ -239,8 +242,9 @@ public class Connector : MonoBehaviour {
 		PrinterScript.PrintImportantInfo(victory);//send text to Printer for print
 		AddScoreMethod(50);
 		AddScoreMethod(mapTime);
+		int scoreTime = startMapTime -mapTime;
 		audioPlayerScript.VictoryMethod();
-		//resultsScript.TurnOnGameOverPanel(mapTime, score, (startMapTime - maptime));
+		resultsScript.TurnOnVictoryPanel(mapTime, score, scoreTime);
 
 	}
 //--------Bonusgold for Killing Ghost-------------------
