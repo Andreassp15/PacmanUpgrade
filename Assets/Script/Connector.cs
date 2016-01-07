@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-//------------------Programmerare Sp15 Luvdvig Emtås-------------------
+//------------------Programmerare Sp15 Ludvig Emtås-------------------
 //*****************************************************************************
 //scriptet tar imot alla object pacman colliderar med, räknar poäng, liv, tider, och säger åt spöken vad
 //dem ska göra via GhostMaster.

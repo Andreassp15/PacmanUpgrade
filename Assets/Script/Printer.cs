@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+//--------------------Programmerare Ludvig Emtås SP15-----------------------------
 //*******************************************************************************
 //Scriptet aanvänds för att printa ut timers och events
 //*************************************************************************************'
@@ -16,8 +17,6 @@ public class Printer : MonoBehaviour {
 	public Text abilityColdownText;
 	public Text importantInfo;
 
-	public GameObject topMiddleText;
-
 	float timer;
 	bool fadyeActive = false;
 	Text currentText;
@@ -25,33 +24,33 @@ public class Printer : MonoBehaviour {
 	void Start () {	
 		
 	}
-//---------------------Score-------------------------
+//--------------Score-------------------------
 	public void PrintScore(int i){
 		scoreText.text = i.ToString();
 	}
-//-------------------Gold Left-----------------
+//--------------Gold Left-----------------
 	public void PrintGoldLeft(int i){
 		goldLeftText.text = i.ToString();
 	}
-//-----------------Pacman Lives----------
+//-------------Pacman Lives----------
 	public void PrintPacmanLives(int i){
 		pacmanLivesText.text = i.ToString();
 	}
-//--------------Print Courage--------------------------
+//--------------Courage--------------------------
 	public void PrintCourageTime(int i){
 		courageTimeText.text = i.ToString();
 	}
 	public void PrintCourageNothing(){
 		courageTimeText.text = "" .ToString();
 	}
-//-------------Print Map Timer-----------------------
+//-------------Map Timer-----------------------
 	public void PrintMapTime(int i){
 		mapTimeText.text = i.ToString();
 	}
 	public void PrintPowerCharges(int i){
 		powerChargesText.text = i.ToString();
 	}
-//-----------------Print Info--------------------------
+//-----------------Info--------------------------
 	public void PrintInfoText(string s){
 		infoText.text = s.ToString();
 		CurrentTextMethod(infoText);
@@ -60,7 +59,7 @@ public class Printer : MonoBehaviour {
 		infoText.text = s1 + " " + i + " " + s2.ToString();
 		CurrentTextMethod(infoText);
 	}
-//---------------Print Important Info------------------
+//---------------Important Info------------------
 	public void PrintImportantInfo(string s){
 		PrintImportantInfoNothing();
 		importantInfo.text = s.ToString();
@@ -77,25 +76,23 @@ public class Printer : MonoBehaviour {
 	public void PrintImportantInfoNothing(){
 		importantInfo.text = "".ToString();
 	}
-//------------------Print Ability CD--------------------
+//-------------Print Ability CD--------------------
 	public void AbilityCoolDownText(int i){
 		abilityColdownText.text = i.ToString();
 	}
-//---------------Fadye Counter / Fixed Update-------
+//----------Fadye Counter / Fixed Update-------
 	void FixedUpdate(){
 		if(fadyeActive == true){
 			timer += Time.deltaTime;			
 		}
 		if(timer >= 3){
 			currentText.text = "".ToString();
-			//topMiddleText.SetActive(false);
 			fadyeActive = false;
 		}
 	}
 	void CurrentTextMethod(Text theText){
 		timer = 0;
 		fadyeActive = true;
-		//topMiddleText.SetActive(true);
 		currentText = theText;
 	}
 

@@ -1,5 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+//-------------------Programmerare Ludvig Emtås Sp15---------------------------------------
+//**************************************************************************************
+//Scriptet används av UseAbilityDecoy Scriptet scriptet ligger på decoy objectet.
+// förstorar och förminskar decoy samt känner av om söken hittar det
+//*************************************************************************************
 
 public class DecoyScript : MonoBehaviour {
 
@@ -23,8 +28,9 @@ public class DecoyScript : MonoBehaviour {
 		pointGhostHuntingScript = pointGhostHuntingObject.GetComponent<PointGhostsHunting>();
 		audioPlayerScript = audioPlayerObject.GetComponent<AudioPlayer>();
 	}
+
 	void OnTriggerEnter(Collider trigger){
-		
+//---------Ghost enter collider while PowerCharge is activated----------------
 		if(trigger.gameObject.tag == "GhostHunt" || trigger.gameObject.tag == "GhostFlee"){
 			if(abilityMasterScript.ReturnPoweredAbilityReady() == true){
 				useAbilityDecoyScript.SetAlreadyActiveTrue();
@@ -32,7 +38,7 @@ public class DecoyScript : MonoBehaviour {
 				audioPlayerScript.DecoyEnlargeMethod();
 				StartCoroutine(ExplodeDecoy());
 				
-				
+//----------Ghost Enter DecoyCollider Without PowerCharge---------	
 			}else{
 				Debug.Log("0");
 				useAbilityDecoyScript.SetAlreadyActiveTrue();
@@ -43,6 +49,7 @@ public class DecoyScript : MonoBehaviour {
 			}
 		}
 	}
+//-------------Explode PowerCharged Decoy--------------
 	IEnumerator ExplodeDecoy(){
 		yield return new WaitForSeconds(1f);
 		explosion.SetActive(true);
@@ -58,7 +65,7 @@ public class DecoyScript : MonoBehaviour {
 		gameObject.SetActive(false);
 	}
 	
-
+//---------------Enlarge Decoy---------------------
 	void FixedUpdate () {
 		if(expand == true){
 			gameObject.GetComponent<Transform>().localScale = Vector3.Lerp(gameObject.transform.localScale, new Vector3(8, 8, 8), enlargeSpeed  * Time.deltaTime);

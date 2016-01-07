@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-//------------------Programmerare Sp15 Luvdvig Emtås-------------------
+//------------------Programmerare Sp15 Ludvig Emtås-------------------
 //**********************************************************************
 //Scriptet sitter på varje Arrow. och skjuter dem frammot i bestämd riktning.
 //**********************************************************************

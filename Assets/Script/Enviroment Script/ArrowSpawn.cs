@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-//------------------Programmerare Sp15 Luvdvig Emtås-------------------
+//------------------Programmerare Sp15 Ludvig Emtås-------------------
 //****************************************************************************
 //Scriptet använder sig av en array med Arrows som blir activa i en bestämd riktning
 //****************************************************************************

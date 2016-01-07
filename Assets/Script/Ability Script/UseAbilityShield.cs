@@ -1,5 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+//-------------------Programmerare Ludvig Emtås SP15-------------
+//********************************************************************************************
+//Scriptet används av AbilityMaster som tilldelar objectet till ShildoPacman
+//pacman kan kasta sin sköld och sedan teleportera till den genom att trycka på samma knapp
+//********************************************************************************************
 
 public class UseAbilityShield : MonoBehaviour {
 
@@ -19,7 +24,6 @@ public class UseAbilityShield : MonoBehaviour {
 	float dZ;
 	Vector3 direction;
 
-
 	bool abilityReady;
 	bool ownShield = true;
 	bool canTeleport = false;
@@ -32,7 +36,7 @@ public class UseAbilityShield : MonoBehaviour {
 	
 	}
 	
-
+//--------------Throw Shield / Teleport to Shield--------------------------------------
 	void Update () {
 		if(Input.GetKeyDown(KeyCode.Space) && abilityMasterScript.ReturnAbilityReady() == true && ownShield == true && canTeleport == false){
 			ownShield = false; 
@@ -55,9 +59,11 @@ public class UseAbilityShield : MonoBehaviour {
 		}
 	
 	}
+//---------------Shield Stuck in Wall-----------------------
 	public void ShieldInWall(){
 		canTeleport = false;
 	}
+//---------------Shield Returned to Pacman-------------------
 	public void ShieldReturned(){
 		ownShield = true;
 		throwShieldObject.SetActive(false);
@@ -65,6 +71,7 @@ public class UseAbilityShield : MonoBehaviour {
 		canTeleport = false;
 		audioPlayerScript.ShieldReturnedMethod();
 	}
+//----------Sends Pacmans current direction to shield----------
 	void GetDirectionForShield(){
 		dX = pacmanMoveScript.ReturnDirectionX();
 		dZ = pacmanMoveScript.ReturnDirectionZ();

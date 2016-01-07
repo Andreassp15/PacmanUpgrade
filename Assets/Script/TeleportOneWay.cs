@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-//------------------Programmerare Sp15 Luvdvig Emtås-------------------
+//------------------Programmerare Sp15 Ludvig Emtås-------------------
 //*****************************************************************
 // Scriptet Teleporterar pacman från Enter till Exit Object
 //******************************************************************
