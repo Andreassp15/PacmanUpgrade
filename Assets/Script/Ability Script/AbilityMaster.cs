@@ -31,6 +31,7 @@ public class AbilityMaster : MonoBehaviour {
 	bool poweredAbilityReady = false;
 	bool poweredAbilityUsed = false;
 
+
 	void Start () {
 		audioPlayerScript = audioPlayerObject.GetComponent<AudioPlayer>();
 		printerScript = printeObject.GetComponent<Printer>();
@@ -147,5 +148,8 @@ public class AbilityMaster : MonoBehaviour {
 		poweredAbilityReady = false;
 		poweredAbilityUsed = false;
 		DeactivatePoweredVisual();
+	}
+	public void TutorialModeOne(){
+		
 	}
 }
