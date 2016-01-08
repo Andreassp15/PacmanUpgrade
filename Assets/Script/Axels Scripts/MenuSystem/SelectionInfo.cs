@@ -6,11 +6,15 @@ public class SelectionInfo : MonoBehaviour { //Denna klass har bara några värd
 	public int charSelected;
 	public string levelSelected;
 
+	public int totalScore;
+
 	private bool startNewGameSelected;
 
 	void Start()
 	{
 		DontDestroyOnLoad(gameObject);
+
+		totalScore = 0;
 
 		startNewGameSelected = false;
 	}
@@ -40,5 +44,13 @@ public class SelectionInfo : MonoBehaviour { //Denna klass har bara några värd
 	public int WhatCharacter()
 	{
 		return charSelected;
+	}
+	public void TotalScore(int addScore)
+	{
+		totalScore = addScore;
+	}
+	public int WhatIsTheScore()
+	{
+		return totalScore;
 	}
 }
