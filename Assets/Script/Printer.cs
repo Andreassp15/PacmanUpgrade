@@ -17,6 +17,8 @@ public class Printer : MonoBehaviour {
 	public Text abilityColdownText;
 	public Text importantInfo;
 
+	public float infoTextVisible;
+
 	float timer;
 	bool fadyeActive = false;
 	Text currentText;
@@ -85,7 +87,7 @@ public class Printer : MonoBehaviour {
 		if(fadyeActive == true){
 			timer += Time.deltaTime;			
 		}
-		if(timer >= 3){
+		if(timer >= infoTextVisible){
 			currentText.text = "".ToString();
 			fadyeActive = false;
 		}
