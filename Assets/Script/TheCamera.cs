@@ -23,7 +23,7 @@ public class TheCamera : MonoBehaviour {
 	void LateUpdate () {
 		//transform.position = cameraLookAt.transform.position.y + 8.5f;
 		//transform.LookAt(cameraLookAt.gameObject.transform.position);
-		transform.position = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z -4f);
+		transform.position = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z -2f);
 	}
 }
 
