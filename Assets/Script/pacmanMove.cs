@@ -97,7 +97,6 @@ public class pacmanMove : MonoBehaviour {
 				savedTurn = 4;
 			}
 		}
-	
 	}
 //----------------Give Pacman Speed-----------------
 	void NormalSpeedMethod(){
@@ -214,8 +213,15 @@ public class pacmanMove : MonoBehaviour {
 		return dZ; 
 	}
 	public void directionFromAbility(){
-
 		DontMoveMethod();
-
+	}
+	public void ActivatePacmanFalling(){
+		gameObject.GetComponent<Rigidbody>().isKinematic = false;
+		DontMoveMethod();
+		gameObject.GetComponent<Rigidbody>().useGravity = true;
+	}
+	public void DeactivatePacmanFalling(){
+		gameObject.GetComponent<Rigidbody>().useGravity = false;
+		gameObject.GetComponent<Rigidbody>().isKinematic = true;
 	}
 }

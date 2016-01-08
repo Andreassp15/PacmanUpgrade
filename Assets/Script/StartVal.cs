@@ -1,26 +1,27 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class StartVal : MonoBehaviour
 {
     public void StartaSpel()
     {
-        Application.LoadLevel("Char_Val");
+		SceneManager.LoadScene("Bana_Val");
     }
 
     public void Options()
     {
-        Application.LoadLevel("Options");
+		SceneManager.LoadScene("Option");
     }
 
     public void Highscore()
     {
-        Application.LoadLevel("Highscore");
+		SceneManager.LoadScene("HighScore");
     }
 
     public void Quit()
     {
-        Application.Quit();
+		Application.Quit();
     }
 }

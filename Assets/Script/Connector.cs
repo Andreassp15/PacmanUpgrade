@@ -1,42 +1,70 @@
 ﻿using UnityEngine;
 using System.Collections;
-//**************************************************************************
+//------------------Programmerare Sp15 Ludvig Emtås-------------------
+//*****************************************************************************
 //scriptet tar imot alla object pacman colliderar med, räknar poäng, liv, tider, och säger åt spöken vad
 //dem ska göra via GhostMaster.
 //************************************************************************************
 public class Connector : MonoBehaviour {
 
 	GameObject[] goldArray;
+	public GameObject abilityMasterObject;
 	public GameObject[] diamondsArray;
 	public GameObject GhostMasterObject;
-	public GameObject pacmanObject;
-	//public GameObject teleporterObject;
-	//Teleporter teleporterScript;
+	public GameObject audioPlayerObject;
+	GameObject pacmanObject;
+	public GameObject MeteorMasterObject;
 	public GameObject teleportOneWayObject;
+	public GameObject pacmanKaiObject;
+	public GameObject pacmanJonObject;
+	public GameObject pacmanNicklasObject;
+	public GameObject resultsObject;
+	Results resultsScript;
+	MeteorMaster meteorMasterScript;
 	TeleportOneWay teleportOneWayScript;
 	GhostMaster ghostMasterScript;
 	pacmanMove PacmanMoveScript;
+	AbilityMaster abilityMasterScript;
+	AudioPlayer audioPlayerScript;
 	int poisonCount = 4;
 	int maxGold;
 	int gold;
 	int score;
 	int lifeNeedScore;
-	int courageCounter = 15;
+	int courageCounter = 0;
 	int pacmanLives = 3;
 	int respawnTime = 5;
 	int ghostKillScore = 5;
-	int mapTime = 180;
+	int mapTime;
+	public int startMapTime;
 
 	bool courageActive = false;
 
 	public GameObject PrinterObject;
 	Printer PrinterScript;
+	void Awake(){
+		GameObject selectObject = GameObject.Find("SelectionInfo");
+		int pacmanNumber = selectObject.gameObject.GetComponent<SelectionInfo>().WhatCharacter();
+		if(pacmanNumber == 1){
+			pacmanKaiObject.SetActive(true);
+		}else if(pacmanNumber == 2){
+			pacmanNicklasObject.SetActive(true);
+		}else if(pacmanNumber == 3){
+			pacmanJonObject.SetActive(true);
+
+		}
+	}
 
 	void Start () {
+		mapTime = startMapTime;
+		resultsScript = resultsObject.GetComponent<Results>();
+		audioPlayerScript = audioPlayerObject.GetComponent<AudioPlayer>();
+		abilityMasterScript = abilityMasterObject.GetComponent<AbilityMaster>();
+		meteorMasterScript = MeteorMasterObject.GetComponent<MeteorMaster>();
+		pacmanObject = GameObject.FindGameObjectWithTag("FindPacmanObject");
 		ghostMasterScript = GhostMasterObject.GetComponent<GhostMaster>();
 		PrinterScript = PrinterObject.GetComponent<Printer>();
 		PacmanMoveScript = pacmanObject.GetComponent<pacmanMove>();
-		//teleporterScript = teleporterObject.GetComponent<Teleporter>();
 		teleportOneWayScript = teleportOneWayObject.GetComponent<TeleportOneWay>();
 
 		FindGoldAmount();
@@ -52,12 +80,14 @@ public class Connector : MonoBehaviour {
 //-----------------------Hit Gold------------------------------
 		if(trigger.gameObject.tag == "Gold"){
 			trigger.gameObject.SetActive(false);
+			audioPlayerScript.EatGoldMethod();
 			AddGoldMethod(1);
 //-----------------------Hit Courage--------------------------
 		}else if(trigger.gameObject.tag == "Courage"){
-			trigger.gameObject.SetActive(false);
+			courageCounter = 15;
+			trigger.gameObject.transform.parent.gameObject.SetActive(false);
+			audioPlayerScript.EatCourageMethod();
 			int courageBonus = 15;
-
 			if(courageActive == false){
 				courageActive = true;
 				InvokeRepeating("CourageActiveTimer", 0, 1);
@@ -69,32 +99,37 @@ public class Connector : MonoBehaviour {
 //------------------------Hit Diamonds-------------------------
 		}else if(trigger.gameObject.tag == "Diamond"){
 			AddScoreMethod(10);
-			trigger.gameObject.SetActive(false);
+			audioPlayerScript.EatDiamondMethod();
+			trigger.gameObject.transform.parent.gameObject.SetActive(false);
 			//add coins for buying extra powertime/hp/speed
 
 //------------------------Hit Ghost Hunt-----------------------
 		}else if(trigger.gameObject.tag == "GhostHunt"){
-			PacmanLoseLife();
+			PacmanLoseLife(trigger.gameObject.transform.parent.gameObject.name);
 			//InvokeRepeating("RespawnTimer",0, 1);
 
 //------------------------Hit Ghost Flee------------------------
 		}else if(trigger.gameObject.tag == "GhostFlee"){
 			ghostMasterScript.DeadGhost(trigger); // activate dead ghost send trigger ghost
+			audioPlayerScript.GhostDiedMethod();
 			GhostKillScoreMethod();
 
 //------------------------Explosives--------------------------
 		}else if(trigger.gameObject.tag == "Explosives"){
-			PacmanLoseLife();
+			PacmanLoseLife(trigger.gameObject.name);
+			//PrinterScript.PrintInfoText("You been killed by " + trigger.gameObject.name);
 			Debug.Log("hit by Explosive");
 		}else if (trigger.gameObject.tag == "Teleport"){
-			//teleportScript.teleportPacman(trigger, pacmanObject);
-			//teleporterScript.TeleportPacman(trigger);
 			teleportOneWayScript.TeleportPacman(trigger);
 //-----------------------Poison----------------------------
 		}else if (trigger.gameObject.tag == "Poison"){
 			trigger.gameObject.SetActive(false);
-			PoisonCounter();
-			Debug.Log("hit by Poison");
+			PoisonCounter(trigger.gameObject.name);
+			audioPlayerScript.PacmanHitPoison();
+		}else if( trigger.gameObject.tag == "PowerCharge"){
+			abilityMasterScript.IncreasePoweredAbility(1);
+			trigger.gameObject.transform.parent.gameObject.SetActive(false);
+			audioPlayerScript.EatPowerChargeMethod();
 		}
 	}
 //------------------------Courage Active Timer-----------------
@@ -102,16 +137,15 @@ public class Connector : MonoBehaviour {
 		if(courageCounter < 1){		
 			courageActive = false;
 			ghostKillScore = 5;
-			courageCounter = 15;
+			courageCounter = 0;
 			CancelInvoke("CourageActiveTimer");
-			PrinterScript.PrintCourageNothing();
 			ghostMasterScript.HuntGhost();//activates hunt ghost in ghost master
 		}else{
 			courageCounter = courageCounter -1;
-			PrinterScript.PrintCourageTime(courageCounter); //send courageCounter to Printer for print
 			//change light when times neraly up
 			//ghostcontroll.chage material.
 		}
+		PrinterScript.PrintCourageTime(courageCounter);
 	}
 //-------------------------Find Amount of Gold------------------
 	void FindGoldAmount(){
@@ -119,7 +153,7 @@ public class Connector : MonoBehaviour {
 	}
 //--------------------------Spawn Diamonds-------------------
 	void SpawnDiamonds(){
-		//text a diamond has spanwed!
+		//text a diamond has spawned!
 		int randomDiamond = Random.Range(0, diamondsArray.Length);
 		diamondsArray[randomDiamond].SetActive(true);
 		StartCoroutine(deactivateDiamond(randomDiamond));
@@ -135,6 +169,10 @@ public class Connector : MonoBehaviour {
 		FindGoldAmount();
 		int goldLeft = goldArray.Length;
 		PrinterScript.PrintGoldLeft(goldLeft);//send goldLeft to printer for print
+
+		if(gold == maxGold){
+			VictoryMethod();
+		}
 	}
 //---------------------------Add Score---------------------------
 	void AddScoreMethod(int amount){
@@ -144,25 +182,29 @@ public class Connector : MonoBehaviour {
 		PrinterScript.PrintScore(score);//sends score to printer for print
 	}
 //-------------------------Pacman Lose Life------------------
-	void PacmanLoseLife(){
+	void PacmanLoseLife(string killer){
 		if(pacmanLives <= 1){
 			GameOverMethod();
 		}else{
+			meteorMasterScript.ResetMeteors();
 			PacmanMoveScript.gameObject.SetActive(false);
 			PacmanMoveScript.TeleportToSpawnPoint();
 			ResetPoisonCount();
 			ghostMasterScript.ResetGhost();//teleports ghost to nest
+			PrinterScript.PrintInfoText("You been killed by " + killer);
 			InvokeRepeating("RespawnTimer",0, 1);
 		}
+		audioPlayerScript.PacmanDiedMethod();
 		pacmanLives = pacmanLives -1;
 		PrinterScript.PrintPacmanLives(pacmanLives);//send pacmanLives to Printer for print
 	}
 //----------------Pacman Gain Life------------------------
 	void PacmanGainLife(){
-		int gainLifeAt = 200;
+		int gainLifeAt = 100;
 		if(lifeNeedScore >= gainLifeAt){
 			lifeNeedScore = lifeNeedScore - gainLifeAt;
 			PacmanAddLife(1);
+			PrinterScript.PrintInfoText("You collected 100 score point. you gain 1 bonus life");
 		}
 	}
 //--------------------Pacman add Life----------------------
@@ -175,32 +217,35 @@ public class Connector : MonoBehaviour {
 
 		if(respawnTime <= 1){
 			PacmanMoveScript.gameObject.SetActive(true);
+			audioPlayerScript.PacmanRespawnMethod();
 			ghostMasterScript.HuntGhost();
-			PrinterScript.PrintInfoNotingText();//Print Nothing in Info Text
+			PrinterScript.PrintImportantInfoNothing();//Print Nothing in Info Text
 			CancelInvoke("RespawnTimer");
 			respawnTime = 5;
 		}else{
 			respawnTime = respawnTime -1;
-			PrinterScript.PrintInfoRespawnText(respawnTime);//send respawnTime to Printer for print
+			PrinterScript.PrintImportantInfoRespawn(respawnTime);//send respawnTime to Printer for print
+
 		}
 	}
 //-------------Player Lost--------------------
 	void GameOverMethod(){
 		string gameOver = "GAME OVER";
-		PrinterScript.PrintInfoText(gameOver);//send text to Printer for print
-		//pause game
-		//in game menu
-		//highscore?
-		//Application.LoadLevel(Menu);   
+		PrinterScript.PrintImportantInfo(gameOver);//send text to Printer for print
+		audioPlayerScript.GameOverMethod();
+		int scoreTime = startMapTime -mapTime;
+		resultsScript.TurnOnGameOverPanel(score, scoreTime);
 	}
 //-----------Player Won-----------------------
 	void VictoryMethod(){
 		string victory = "VICTORY";
-		PrinterScript.PrintInfoText(victory);//send text to Printer for print
+		PrinterScript.PrintImportantInfo(victory);//send text to Printer for print
 		AddScoreMethod(50);
 		AddScoreMethod(mapTime);
-		//highscore
-		//Application.LoadLevel(next Level);
+		int scoreTime = startMapTime -mapTime;
+		audioPlayerScript.VictoryMethod();
+		resultsScript.TurnOnVictoryPanel(mapTime, score, scoreTime);
+
 	}
 //--------Bonusgold for Killing Ghost-------------------
 	void GhostKillScoreMethod(){
@@ -221,13 +266,13 @@ public class Connector : MonoBehaviour {
 		PrinterScript.PrintScore(score);
 		PrinterScript.PrintGoldLeft(maxGold);
 		PrinterScript.PrintPacmanLives(pacmanLives);
-		PrinterScript.PrintCourageNothing();
+		PrinterScript.PrintCourageTime(courageCounter);
 		//PrinterScript.PrintMapTime();
 	}
 //---------------Poison Counter---------------
-	void PoisonCounter(){
+	void PoisonCounter(string killer){
 		if(poisonCount == 1){
-			PacmanLoseLife();
+			PacmanLoseLife(killer);
 			poisonCount = 4;	
 		}
 		else{
@@ -239,12 +284,13 @@ public class Connector : MonoBehaviour {
 		poisonCount = 4;
 	}
 
-	
-	
-	
-	
-	
-	void Update () {
-	
+
+//-----------------Powered Ability Hit Something-----------------------------
+	public void PoweredAbilityHitSomething(GameObject trigger){
+		if(trigger.gameObject.tag == "GhostFlee" || trigger.gameObject.tag == "GhostHunt"){
+			audioPlayerScript.GhostDiedMethod();
+			ghostMasterScript.DeadGhost(trigger);
+		}
 	}
+		
 }

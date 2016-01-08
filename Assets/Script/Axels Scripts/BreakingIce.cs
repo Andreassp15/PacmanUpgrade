@@ -8,25 +8,33 @@ public class BreakingIce : MonoBehaviour {
 
 	private int timesPacHasEntered;  //Den variabel ska räkna hur många gånger pacman har gått över en platta.
 
-	//private GameObject pacMan;
+	private GameObject iceTextureCube; //Objectet som ska byta texture.
+
+	private Material crackedIce;
+	private Material brokenIce;
+
 
 	void Start () {
 	
 		timesPacHasEntered = 0;
 
-		//pacMan = GameObject.Find
+		iceTextureCube = this.gameObject.transform.GetChild(0).gameObject;
+
+		crackedIce = Resources.Load("CrackedIce") as Material;
+		brokenIce = Resources.Load("BrokenIce") as Material;
 
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
-	
+
 	}
 
-	void OnCollisionEnter(Collision col)
+	void OnTriggerEnter(Collider col)
 	{
-		if(col.gameObject.tag == ("PacMan") && timesPacHasEntered != 2)
+
+		if(col.gameObject.tag == ("Pacman") && timesPacHasEntered != 2)
 		{
+			Debug.Log(timesPacHasEntered);
 			timesPacHasEntered++;
 			Debug.Log("PacMan enters platform");
 		}
@@ -34,22 +42,33 @@ public class BreakingIce : MonoBehaviour {
 
 	}
 
-	void OnCollisionExit(Collision col)
+	void OnTriggerExit(Collider col)
 	{
-		if(col.gameObject.tag == ("PacMan"))
+		if(col.gameObject.tag == ("Pacman"))
 		{
+
+
+
 			if(timesPacHasEntered == 2)
 			{
-				PacManFallnDie();
-				Debug.Log("Oh No I fall and Die");
-			}
-				
-		}
-	}
+				//gameObject.tag = "Wall";
+				Debug.Log("Ice Broken!");
+			
+				iceTextureCube.GetComponent<MeshRenderer>().sharedMaterial = brokenIce;
 
+
+		}
+			if(col.gameObject.tag == ("Pacman") && timesPacHasEntered == 1)
+			{
+				iceTextureCube.GetComponent<MeshRenderer>().sharedMaterial = crackedIce;
+			}
+
+	}
+	}
 	void PacManFallnDie()
 	{
 		
 	}
 
 }
+
