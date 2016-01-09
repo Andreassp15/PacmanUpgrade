@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
+
 
 public class ElsaController : MonoBehaviour {
 
-	public GameObject pacman;
+	private GameObject pacman;
 
 	private Vector3 fwd;
 
@@ -29,11 +30,30 @@ public class ElsaController : MonoBehaviour {
 	private float iceSpikeGo;
 	private bool spikeTargetSet;
 	public GameObject iceSpike;
+	public GameObject iceSpikeDady;
+	public ParticleSystem warning;
+
+	private List<GameObject> bridgesList;
+
+	private GameObject bridgeMama;
+
+
 
 
 
 	void Start()
 	{
+		pacman = GameObject.FindGameObjectWithTag("Pacman");
+
+		bridgeMama = GameObject.Find("AllBridges");
+		bridgesList = new List<GameObject>();
+
+		for(int i = 0; i < bridgeMama.transform.childCount; i++)
+		{
+			bridgesList.Add(bridgeMama.transform.GetChild(i).transform.gameObject);
+		}
+
+
 		lastTarget = 0;
 
 		jumpsBeforeAttack = 5;
@@ -91,8 +111,11 @@ public class ElsaController : MonoBehaviour {
 		else
 		{
 			
-			if(Vector3.Distance(transform.position, pacman.transform.position) < 16.0f)
+			if(Vector3.Distance(transform.position, pacman.transform.position) < 16.0f && PacmanInAir() == false)
 			{
+
+
+
 				if(Vector3.Distance(transform.position, jumpTargets[target].transform.position) < 0.5f)
 						{
 						IceSpikeAttack();
@@ -223,14 +246,17 @@ public class ElsaController : MonoBehaviour {
 
 		if(spikeTargetSet == false)
 		{
-			iceSpike.gameObject.transform.position = pacman.gameObject.transform.position;
+			iceSpikeDady.gameObject.transform.position = pacman.gameObject.transform.position;
+			warning.gameObject.SetActive(true);
+
+
 			spikeTargetSet = true;
 		}
 
 		if(iceSpikeGo > 0.5f)
 		{
 			iceSpike.SetActive(true);
-
+			warning.gameObject.SetActive(false);
 			jumpsDoneInSession = 0;
 
 			iceSpikeGo = 0;
@@ -239,4 +265,30 @@ public class ElsaController : MonoBehaviour {
 			jumpsBeforeAttack = Random.Range(5,11);
 		}
 	}
+	private bool PacmanInAir()
+				{
+					bool verdict = new bool();
+
+
+					for(int i = 0; i < bridgesList.Count; i++)
+					{
+
+						if(bridgesList[i].GetComponent<FloatingBridges>().IsPacmanInAir() == true)
+						{
+							verdict = true;
+
+							break;
+						}
+						else
+						{
+							verdict = false;
+						}
+
+						
+						}
+					return verdict;
+
+				}
+
+				
 }

@@ -3,14 +3,14 @@ using System.Collections;
 
 public class Fire_Checkpoints : MonoBehaviour {
 
-	private int pointsTurnedOn = 0;
 
+	private bool[] points = new bool[4] {false, false, false, false};
 
-	public void AddPoint()
+	public void AddPoint(int o)
 	{
-		pointsTurnedOn++;
+		points[o] = true;
 
-		if(pointsTurnedOn == 4)
+		if(AllActive() == true)
 		{
 
 			transform.GetChild(4).gameObject.GetComponent<ParticleSystem>().Play();
@@ -23,9 +23,28 @@ public class Fire_Checkpoints : MonoBehaviour {
 			}
 		}
 	}
-
-	public void SubtractPoint()
+	private bool AllActive()
 	{
-		pointsTurnedOn--;
+
+		bool status = new bool();
+
+
+		for(int i = 0; i < points.Length; i++)
+		{
+			status = points[i];
+
+			if(status == false)
+			{
+				break;
+			}
+			else
+			{
+				status = true;
+			}
+
+		}
+
+		return status;
+
 	}
 }
