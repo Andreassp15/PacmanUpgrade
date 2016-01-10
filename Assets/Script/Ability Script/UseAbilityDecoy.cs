@@ -13,11 +13,13 @@ public class UseAbilityDecoy : MonoBehaviour {
 	public GameObject decoyObject;
 	public GameObject pacmanObject;
 	public GameObject audioPlayerObject;
+	public GameObject printerObject;
 
 	AudioPlayer audioPlayerScript;
 	AbilityMaster abilityMasterScript;
 	PointGhostsHunting pointGhostHuntingScript;
 	pacmanMove pacmanScript;
+	Printer printerScript;
 
 	bool alreadyActive = false;
 
@@ -26,6 +28,7 @@ public class UseAbilityDecoy : MonoBehaviour {
 		abilityMasterScript = abilityMasterObject.GetComponent<AbilityMaster>();
 		pointGhostHuntingScript = pointGhostHuntingObject.GetComponent<PointGhostsHunting>();
 		pacmanScript = pacmanObject.GetComponent<pacmanMove>();
+		printerScript = printerObject.GetComponent<Printer>();
 
 	}
 	
@@ -42,6 +45,7 @@ public class UseAbilityDecoy : MonoBehaviour {
 			pointGhostHuntingObject.transform.position = decoyObject.transform.position;
 			abilityMasterScript.FindObjectVisual(decoyObject.gameObject);
 		}else if(Input.GetKeyDown(KeyCode.Space) && abilityMasterScript.ReturnAbilityReady() == false){
+			printerScript.PrintInfoText("Your ability is on cooldown");
 			audioPlayerScript.AbilityNotReadyMethod();
 		}
 	

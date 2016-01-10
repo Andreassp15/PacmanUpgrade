@@ -12,14 +12,17 @@ public class UseAbilityMagnet : MonoBehaviour {
 	public GameObject pacmanObject;
 	public GameObject poweredVisualOther;
 	public GameObject audioPlayerObject;
+	public GameObject printerObject;
 	AudioPlayer audioPlayerScript;
 
 	bool enlarge;
 	float enlargeSpeed = 4f;
 
 	AbilityMaster abilityMasterScript;
+	Printer printerScript;
 
 	void Start () {
+		printerScript = printerObject.GetComponent<Printer>();
 		audioPlayerScript = audioPlayerObject.GetComponent<AudioPlayer>();
 		poweredVisualOther.GetComponent<ParticleSystem>().startLifetime = 4;
 		abilityMasterScript = abilityMasterObject.GetComponent<AbilityMaster>();
@@ -38,6 +41,7 @@ public class UseAbilityMagnet : MonoBehaviour {
 			audioPlayerScript.MagnetEnlargeMethod();
 			StartCoroutine(MagnetTimer());
 		}else if(Input.GetKeyDown(KeyCode.Space) && abilityMasterScript.ReturnAbilityReady() == false){
+			printerScript.PrintInfoText("Your ability is on cooldown");
 			audioPlayerScript.AbilityNotReadyMethod();
 		}
 		if(enlarge == true){

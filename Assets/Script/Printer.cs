@@ -16,12 +16,23 @@ public class Printer : MonoBehaviour {
 	public Text infoText;
 	public Text abilityColdownText;
 	public Text importantInfo;
+	public Text tutoInfoText;
+	public Transform tutorialPanel;
+	public Transform infoPanel;
 
 	public float infoTextVisible;
 
 	float timer;
 	bool fadyeActive = false;
 	Text currentText;
+
+	float panelTimer;
+	bool closePanel = false;
+
+	bool scaleTutoPanelUp = false;
+	float scaleSpeed = 3f;
+
+	bool scaleInfoPanel = false;
 	
 	void Start () {	
 		
@@ -54,12 +65,13 @@ public class Printer : MonoBehaviour {
 	}
 //-----------------Info--------------------------
 	public void PrintInfoText(string s){
+		//infoText.text = s.ToString();
+		CloseInfoMethod();
+		infoPanel.gameObject.SetActive(true);
+		infoPanel.gameObject.GetComponent<RectTransform>().localScale = new Vector2(0.1f, 0.1f);
 		infoText.text = s.ToString();
-		CurrentTextMethod(infoText);
-	}
-	public void PrintInfoArrows(string s1, int i, string s2){
-		infoText.text = s1 + " " + i + " " + s2.ToString();
-		CurrentTextMethod(infoText);
+		scaleInfoPanel = true;
+		//CurrentTextMethod(infoText);
 	}
 //---------------Important Info------------------
 	public void PrintImportantInfo(string s){
@@ -88,15 +100,52 @@ public class Printer : MonoBehaviour {
 			timer += Time.deltaTime;			
 		}
 		if(timer >= infoTextVisible){
-			currentText.text = "".ToString();
+			//currentText.text = "".ToString();
+			infoPanel.gameObject.SetActive(false);
 			fadyeActive = false;
 		}
+		if(scaleTutoPanelUp == true){
+			tutorialPanel.gameObject.GetComponent<RectTransform>().localScale = Vector2.Lerp(tutorialPanel.transform.localScale, new Vector2(1, 1), scaleSpeed * Time.deltaTime);
+		}if(scaleInfoPanel == true){
+			infoPanel.gameObject.GetComponent<RectTransform>().localScale = Vector2.Lerp(infoPanel.transform.localScale, new Vector2(1, 1), scaleSpeed * Time.deltaTime);
+		}
+
+		if(closePanel == true){
+			panelTimer += Time.deltaTime;
+		}
+		if(panelTimer >= 10f){
+			tutorialPanel.gameObject.SetActive(false);
+			closePanel = false;
+		}
+		/*if(Input.GetKeyDown(KeyCode.L)){
+			PrintInfoText("hello");
+		}*/
 	}
-	void CurrentTextMethod(Text theText){
+	/*void CurrentTextMethod(Text theText){
 		timer = 0;
 		fadyeActive = true;
 		currentText = theText;
+	}*/
+	void CloseInfoMethod(){
+		timer = 0;
+		fadyeActive = true;
 	}
+	void ClosePanelMethod(){
+		panelTimer = 0;
+		closePanel = true;
+
+	}
+//-----------TutorialPanel--------------------
+	public void PrintTutorialPanel(string s){
+		ClosePanelMethod();
+		tutorialPanel.gameObject.SetActive(true);
+		tutorialPanel.gameObject.GetComponent<RectTransform>().localScale = new Vector2(0.1f, 0.1f);
+		tutoInfoText.text = s.ToString();
+		scaleTutoPanelUp = true;
+
+	}
+
+
 
 
 }
