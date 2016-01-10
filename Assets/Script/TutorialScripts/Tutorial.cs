@@ -10,7 +10,8 @@ public class Tutorial : MonoBehaviour {
 	//public GameObject abilityMasterObject;
 	//AbilityMaster abilityMasterScript;
 
-	public GameObject openPath;
+	public GameObject openPathOne;
+	public float pathWaitTime;
 
 	/*public GameObject InfoCoins;
 	public GameObject InfoDiamonds;
@@ -20,18 +21,22 @@ public class Tutorial : MonoBehaviour {
 
 	void Start () {
 		printerScript = printerObject.GetComponent<Printer>();
+		StartCoroutine(OpenPath());
 
 
 	}
-		
 
-	public void RemoveOpenPathMethod(){
-		openPath.SetActive(false);
+	IEnumerator OpenPath(){
+		yield return new WaitForSeconds(pathWaitTime);
+		openPathOne.SetActive(false);
 	}
 	public void PrintInfo(GameObject theBox){
 		if(theBox.gameObject.name == "InfoCoins"){
+			Debug.Log("hello");
+			printerScript.PrintInfoText("Gather all the Gold Coins! Each coin gives you 1 point. When you gathered all the coins you are victorious");
 			//printerScript.TutorialInfo("Gather all the Gold Coins! Each coin gives you 1 point. When you gathered all the coins you are victorious");
 		}else if(theBox.gameObject.name == "InfoDiamonds"){
+			Debug.Log("Diamons");printerScript.PrintInfoText("The Blue Coins are larger and more valuble, Collect them and gain some bonus points");
 			//printerScript.TutorialInfo("The Blue Coins are larger and more valuble, Collect them and gain some bonus points");
 		}else if(theBox.gameObject.name == "InfoTeleports"){
 			//printerScript.TutorialInfo("Enter the Teleport Gateway to teleport to the otherside");
