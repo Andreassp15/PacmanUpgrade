@@ -6,13 +6,24 @@ public class Fire_Checkpoints : MonoBehaviour {
 
 
 	private bool[] points = new bool[4] {false, false, false, false};
+	private GameObject[] kids;
 	private GameObject purpMagic;
 	private ParticleSystem.MinMaxCurve emissionRate;
+	private GameObject[] iceSpikes;
 
 	void Start()
 	{
+		kids = new GameObject[4];
+		iceSpikes = new GameObject[4];
+
 		purpMagic = transform.GetChild(5).gameObject;
 		emissionRate = purpMagic.GetComponent<ParticleSystem>().emission.rate;
+
+		for(int i = 0; i < 4; i++)
+		{
+			kids[i] = transform.GetChild(i).gameObject;
+			iceSpikes[i] = transform.parent.parent.GetChild(i + 2).gameObject;
+		}
 	}
 
 
@@ -31,11 +42,6 @@ public class Fire_Checkpoints : MonoBehaviour {
 			GetComponentInParent<Mama_Checkpoint>().AddCheckpoint();
 
 			transform.parent.GetComponent<Mama_Checkpoint>().ActivateCoin(gameObject);
-
-			for(int i = 0; i <= 3; i++)
-			{
-				transform.GetChild(i).gameObject.SetActive(false);
-			}
 		}
 	}
 	private bool AllActive()
@@ -70,5 +76,14 @@ public class Fire_Checkpoints : MonoBehaviour {
 			{
 			purpMagic.GetComponent<ParticleSystem>().Emit(100);
 			}
+	}
+	public void MultiSpikeAttack()
+	{
+		for(int i = 0; i < 4; i++)
+		{
+				iceSpikes[i].transform.GetChild(2).gameObject.SetActive(true);
+				iceSpikes[i].transform.position = kids[i].transform.position;
+		}
+	
 	}
 }

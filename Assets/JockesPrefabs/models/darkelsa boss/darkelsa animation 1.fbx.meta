@@ -112,6 +112,8 @@ ModelImporter:
     4300000: body
     4300002: head
     7400000: Take 001
+    7400002: Take 0010
+    7400004: Take 0011
     9500000: //RootNode
     13700000: body
     13700002: head
@@ -140,7 +142,271 @@ ModelImporter:
       name: Take 001
       takeName: Take 001
       firstFrame: 1
-      lastFrame: 325
+      lastFrame: 212
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: body
+        weight: 1
+      - path: head
+        weight: 1
+      - path: L_Foot_CTRL
+        weight: 1
+      - path: L_Foot_CTRL/L_Ball_IK
+        weight: 1
+      - path: L_Foot_CTRL/L_Toe_IK
+        weight: 1
+      - path: L_Foot_CTRL/R_Foot_groop
+        weight: 1
+      - path: L_Foot_CTRL/R_Foot_groop/L_Leg_IK
+        weight: 1
+      - path: R_Foot_CTRL
+        weight: 1
+      - path: R_Foot_CTRL/group1
+        weight: 1
+      - path: R_Foot_CTRL/group1/R_Ball_IK
+        weight: 1
+      - path: R_Foot_CTRL/group1/R_Toe_IK
+        weight: 1
+      - path: R_Foot_CTRL/group2
+        weight: 1
+      - path: R_Foot_CTRL/group2/R_Leg_IK
+        weight: 1
+      - path: spine1
+        weight: 1
+      - path: spine1/group5
+        weight: 1
+      - path: spine1/group5/group4
+        weight: 1
+      - path: spine1/group5/group4/group3
+        weight: 1
+      - path: spine1/group5/group4/group3/L_Hand_IK
+        weight: 1
+      - path: spine1/group5/group4/L_Arm_IK
+        weight: 1
+      - path: spine1/group5/L_Shoulder_IK
+        weight: 1
+      - path: spine1/group8
+        weight: 1
+      - path: spine1/group8/group7
+        weight: 1
+      - path: spine1/group8/group7/group6
+        weight: 1
+      - path: spine1/group8/group7/group6/R_Hand_IK
+        weight: 1
+      - path: spine1/group8/group7/R_Arm_IK
+        weight: 1
+      - path: spine1/group8/R_Shoulder_IK
+        weight: 1
+      - path: spine1/head_IK
+        weight: 1
+      - path: spine1/joint7
+        weight: 1
+      - path: spine1/joint7/joint8
+        weight: 1
+      - path: spine1/joint7/joint8/joint9
+        weight: 1
+      - path: spine1/joint7/joint8/joint9/joint10
+        weight: 1
+      - path: spine1/joint7/joint8/joint9/joint10/joint11
+        weight: 1
+      - path: spine1/L_Hip
+        weight: 1
+      - path: spine1/L_Hip/L_Knee
+        weight: 1
+      - path: spine1/L_Hip/L_Knee/L_Ankle
+        weight: 1
+      - path: spine1/L_Hip/L_Knee/L_Ankle/L_Ball
+        weight: 1
+      - path: spine1/L_Hip/L_Knee/L_Ankle/L_Ball/L_Toe
+        weight: 1
+      - path: spine1/spine2
+        weight: 1
+      - path: spine1/spine2/spine3
+        weight: 1
+      - path: spine1/spine2/spine3/spine4
+        weight: 1
+      - path: spine1/spine2/spine3/spine4/spine5
+        weight: 1
+      - path: spine1/spine2/spine3/spine4/spine5/headjoint
+        weight: 1
+      - path: spine1/spine2/spine3/spine4/spine5/headjoint/joint17
+        weight: 1
+      - path: spine1/spine2/spine3/spine4/spine5/joint18
+        weight: 1
+      - path: spine1/spine2/spine3/spine4/spine5/joint18/joint19
+        weight: 1
+      - path: spine1/spine2/spine3/spine4/spine5/joint18/joint19/joint20
+        weight: 1
+      - path: spine1/spine2/spine3/spine4/spine5/joint18/joint19/joint20/joint21
+        weight: 1
+      - path: spine1/spine2/spine3/spine4/spine5/joint22
+        weight: 1
+      - path: spine1/spine2/spine3/spine4/spine5/joint22/joint23
+        weight: 1
+      - path: spine1/spine2/spine3/spine4/spine5/joint22/joint23/joint24
+        weight: 1
+      - path: spine1/spine2/spine3/spine4/spine5/joint22/joint23/joint24/joint25
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Take 0010
+      takeName: Take 001
+      firstFrame: 217
+      lastFrame: 224
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: body
+        weight: 1
+      - path: head
+        weight: 1
+      - path: L_Foot_CTRL
+        weight: 1
+      - path: L_Foot_CTRL/L_Ball_IK
+        weight: 1
+      - path: L_Foot_CTRL/L_Toe_IK
+        weight: 1
+      - path: L_Foot_CTRL/R_Foot_groop
+        weight: 1
+      - path: L_Foot_CTRL/R_Foot_groop/L_Leg_IK
+        weight: 1
+      - path: R_Foot_CTRL
+        weight: 1
+      - path: R_Foot_CTRL/group1
+        weight: 1
+      - path: R_Foot_CTRL/group1/R_Ball_IK
+        weight: 1
+      - path: R_Foot_CTRL/group1/R_Toe_IK
+        weight: 1
+      - path: R_Foot_CTRL/group2
+        weight: 1
+      - path: R_Foot_CTRL/group2/R_Leg_IK
+        weight: 1
+      - path: spine1
+        weight: 1
+      - path: spine1/group5
+        weight: 1
+      - path: spine1/group5/group4
+        weight: 1
+      - path: spine1/group5/group4/group3
+        weight: 1
+      - path: spine1/group5/group4/group3/L_Hand_IK
+        weight: 1
+      - path: spine1/group5/group4/L_Arm_IK
+        weight: 1
+      - path: spine1/group5/L_Shoulder_IK
+        weight: 1
+      - path: spine1/group8
+        weight: 1
+      - path: spine1/group8/group7
+        weight: 1
+      - path: spine1/group8/group7/group6
+        weight: 1
+      - path: spine1/group8/group7/group6/R_Hand_IK
+        weight: 1
+      - path: spine1/group8/group7/R_Arm_IK
+        weight: 1
+      - path: spine1/group8/R_Shoulder_IK
+        weight: 1
+      - path: spine1/head_IK
+        weight: 1
+      - path: spine1/joint7
+        weight: 1
+      - path: spine1/joint7/joint8
+        weight: 1
+      - path: spine1/joint7/joint8/joint9
+        weight: 1
+      - path: spine1/joint7/joint8/joint9/joint10
+        weight: 1
+      - path: spine1/joint7/joint8/joint9/joint10/joint11
+        weight: 1
+      - path: spine1/L_Hip
+        weight: 1
+      - path: spine1/L_Hip/L_Knee
+        weight: 1
+      - path: spine1/L_Hip/L_Knee/L_Ankle
+        weight: 1
+      - path: spine1/L_Hip/L_Knee/L_Ankle/L_Ball
+        weight: 1
+      - path: spine1/L_Hip/L_Knee/L_Ankle/L_Ball/L_Toe
+        weight: 1
+      - path: spine1/spine2
+        weight: 1
+      - path: spine1/spine2/spine3
+        weight: 1
+      - path: spine1/spine2/spine3/spine4
+        weight: 1
+      - path: spine1/spine2/spine3/spine4/spine5
+        weight: 1
+      - path: spine1/spine2/spine3/spine4/spine5/headjoint
+        weight: 1
+      - path: spine1/spine2/spine3/spine4/spine5/headjoint/joint17
+        weight: 1
+      - path: spine1/spine2/spine3/spine4/spine5/joint18
+        weight: 1
+      - path: spine1/spine2/spine3/spine4/spine5/joint18/joint19
+        weight: 1
+      - path: spine1/spine2/spine3/spine4/spine5/joint18/joint19/joint20
+        weight: 1
+      - path: spine1/spine2/spine3/spine4/spine5/joint18/joint19/joint20/joint21
+        weight: 1
+      - path: spine1/spine2/spine3/spine4/spine5/joint22
+        weight: 1
+      - path: spine1/spine2/spine3/spine4/spine5/joint22/joint23
+        weight: 1
+      - path: spine1/spine2/spine3/spine4/spine5/joint22/joint23/joint24
+        weight: 1
+      - path: spine1/spine2/spine3/spine4/spine5/joint22/joint23/joint24/joint25
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Take 0011
+      takeName: Take 001
+      firstFrame: 252
+      lastFrame: 333
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

@@ -8,6 +8,7 @@ public class IcePike : MonoBehaviour {
 	public ParticleSystem poof;
 	public ParticleSystem warning;
 
+
 	void Update()
 	{
 		lifetime = lifetime + Time.deltaTime;
@@ -17,7 +18,6 @@ public class IcePike : MonoBehaviour {
 			poof.Emit(50);
 
 			gameObject.SetActive(false);
-
 
 			lifetime = 0.0f;
 		}

@@ -26,11 +26,7 @@ public class Mama_Checkpoint : MonoBehaviour {
 	public void AddCheckpoint()
 	{
 		checkpointTurnedOn++;
-
-		if(checkpointTurnedOn == 8)
-		{
-			elsaDead = true;
-		}
+		transform.parent.GetChild(0).GetComponent<ElsaController>().AddFireCheckpoint();
 	}
 	public void SubtractCheckpoint()
 	{

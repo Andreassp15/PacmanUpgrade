@@ -11,6 +11,8 @@ public class ElsaController : MonoBehaviour {
 	private Vector3 jumpSpeed;
 	public float rotationSpeed;
 
+	private float time;
+
 	public Transform[] jumpTargets;
 	private int target;
 	private int currentPosision;
@@ -18,6 +20,7 @@ public class ElsaController : MonoBehaviour {
 
 	private int jumpsDoneInSession;
 	private int jumpsBeforeAttack;
+	private int fireCheckpointsLit;
 
 	private float rotationInput;
 	protected float jumpInput;
@@ -26,10 +29,11 @@ public class ElsaController : MonoBehaviour {
 	private bool needNewTarget;
 	private bool targetSighted;
 	private bool inPosition;
+	private bool attacking;
 
 	private float iceSpikeGo;
 	private bool spikeTargetSet;
-	public GameObject iceSpike;
+	private GameObject[] iceSpikes;
 	public GameObject iceSpikeDady;
 	public ParticleSystem warning;
 
@@ -37,12 +41,34 @@ public class ElsaController : MonoBehaviour {
 
 	private GameObject bridgeMama;
 
+	private Animator elsaAnimator;
+
+	private List<GameObject> fireCheckpoints;
+
 
 
 
 
 	void Start()
 	{
+		iceSpikes = new GameObject[4];
+
+		fireCheckpoints = new List<GameObject>();
+
+		for(int i = 0; i < 8; i++)
+		{
+			fireCheckpoints.Add(transform.parent.GetChild(1).GetChild(i).gameObject);
+		}
+		for(int i = 0; i < 4; i++)
+		{
+			iceSpikes[i] = transform.parent.GetChild(i + 2).gameObject;
+			iceSpikes[i].transform.GetChild(0).gameObject.SetActive(false);
+		}
+
+		fireCheckpointsLit = 0;
+
+		elsaAnimator = transform.GetChild(0).GetComponent<Animator>();
+
 		pacman = GameObject.FindGameObjectWithTag("Pacman");
 
 		bridgeMama = GameObject.Find("AllBridges");
@@ -53,6 +79,7 @@ public class ElsaController : MonoBehaviour {
 			bridgesList.Add(bridgeMama.transform.GetChild(i).transform.gameObject);
 		}
 
+		time = 0f;
 
 		lastTarget = 0;
 
@@ -69,15 +96,12 @@ public class ElsaController : MonoBehaviour {
 		needNewTarget = false;
 		targetSighted = true;
 		inPosition = false;
+		attacking = false;
 
 		currentPosision = 0;
 
 
 		target = 1;
-
-		iceSpikeGo = 0.3f;
-
-		iceSpike.SetActive(false);
 
 	}
 
@@ -89,7 +113,7 @@ public class ElsaController : MonoBehaviour {
 			}
 		if(jumpsDoneInSession == jumpsBeforeAttack)
 		{
-			transform.position = Vector3.Lerp(transform.position, jumpTargets[target].transform.position, 2.0f * Time.deltaTime);
+			transform.position = Vector3.Lerp(transform.position, jumpTargets[target].transform.position, 3.0f * Time.deltaTime);
 		}
 	}
 	void Update()
@@ -116,10 +140,17 @@ public class ElsaController : MonoBehaviour {
 
 
 
-				if(Vector3.Distance(transform.position, jumpTargets[target].transform.position) < 0.5f)
-						{
-						IceSpikeAttack();
-						}
+				if(Vector3.Distance(transform.position, jumpTargets[target].transform.position) < 0.5f && attacking == false)
+					{
+										if(fireCheckpointsLit < 5)
+											{
+											IceSpikeAttack();
+											}
+										else
+											{
+											MultiSpikeAttack();
+											}
+					}
 			}
 			else
 			{
@@ -147,7 +178,7 @@ public class ElsaController : MonoBehaviour {
 	}
 
 
-	private Vector3 CalculateVel(Vector3 origin, Vector3 target, float timeToTarget)
+	private Vector3 CalculateVel(Vector3 origin, Vector3 target, float timeToTarget) // Denna metod räknar ut den kraft som behövs för att skjuta ett object till en plats.
 	{
 		Vector3 toTarget = target - origin;
 		Vector3 toTargetXZ = toTarget;
@@ -169,7 +200,7 @@ public class ElsaController : MonoBehaviour {
 
 		return result;
 	}
-	private void ChoseTarget()
+	private void ChoseTarget() //Denna metod är för att välja en platform att hoppa till.
 	{
 
 		target = Random.Range(0, 4);
@@ -216,8 +247,10 @@ public class ElsaController : MonoBehaviour {
 
 	}
 
-	private void DarkElsaJump()
+	private void DarkElsaJump() // För att röra bossen använder vi force.
 	{
+		elsaAnimator.Play("Take 001");
+
 		GetComponent<Rigidbody>().isKinematic = false;
 
 		jumpSpeed =  CalculateVel(transform.position, jumpTargets[target].position, 1f);
@@ -227,17 +260,17 @@ public class ElsaController : MonoBehaviour {
 
 
 	}
-	private void DarkElsaRotate(Vector3 newDirection)
+	private void DarkElsaRotate(Vector3 newDirection) // bossen roterar fult men det duger.
 	{
 		transform.LookAt(newDirection);
 	}
 
 
-	private void IsTouchDown()
+	private void IsTouchDown()// när bossen landar ska den bli kinematic igen.
 	{
 		if(transform.position.y - jumpTargets[target].transform.position.y < 0.5f && Vector3.Distance(transform.position, jumpTargets[target].transform.position) < 3.0f)
 		{
-			
+			elsaAnimator.Play("Take 0011");
 
 			jumpsDoneInSession++;
 
@@ -257,29 +290,53 @@ public class ElsaController : MonoBehaviour {
 	}
 	private void IceSpikeAttack()
 	{
-		iceSpikeGo = iceSpikeGo + Time.deltaTime;
-
-
-		if(spikeTargetSet == false)
+		if(spikeTargetSet == false && attacking == false)
 		{
-			iceSpikeDady.gameObject.transform.position = pacman.gameObject.transform.position;
-			warning.gameObject.SetActive(true);
-
-
+			elsaAnimator.Play("Take 001 0");
+			iceSpikes[0].transform.GetChild(2).gameObject.SetActive(true);
+			iceSpikes[0].gameObject.transform.position = pacman.gameObject.transform.position;
+			attacking = true;
 			spikeTargetSet = true;
-		}
 
-		if(iceSpikeGo > 0.5f)
+			Invoke("IceSpikeSpawn", Random.Range(0.5f, 0.9f));
+		}
+	}
+	private void IceSpikeSpawn()
+	{
+		foreach(GameObject t in iceSpikes)
 		{
-			iceSpike.SetActive(true);
-			warning.gameObject.SetActive(false);
-			jumpsDoneInSession = 0;
-
-			iceSpikeGo = 0;
-			spikeTargetSet = false;
-
-			jumpsBeforeAttack = Random.Range(5,11);
+			t.transform.GetChild(0).gameObject.SetActive(true);
+			t.transform.GetChild(2).gameObject.SetActive(false);
 		}
+		spikeTargetSet = false;
+
+		Invoke("ReSetJumps", 1.5f);
+	}
+	private void MultiSpikeAttack()
+	{
+		float minDist = Mathf.Infinity;
+
+		elsaAnimator.Play("Take 001 0");
+
+		GameObject closestFireCheckpoint = new GameObject();
+
+		attacking = true;
+
+		foreach (GameObject t in fireCheckpoints)
+		{
+			float dist = Vector3.Distance(pacman.transform.position, t.transform.position);
+			if(dist < minDist)
+			{
+				closestFireCheckpoint = t;
+
+				minDist = dist;
+			}
+		}
+
+		closestFireCheckpoint.GetComponent<Fire_Checkpoints>().MultiSpikeAttack();
+
+		Invoke("IceSpikeSpawn", Random.Range(0.5f, 0.9f));
+
 	}
 	private bool PacmanInAir()
 				{
@@ -305,6 +362,17 @@ public class ElsaController : MonoBehaviour {
 					return verdict;
 
 				}
+	public void ReSetJumps()
+	{
+			jumpsDoneInSession = 0;
+			jumpsBeforeAttack = Random.Range(5,9);
+			attacking = false;
+
+	}
+	public void AddFireCheckpoint()
+	{
+		fireCheckpointsLit++;
+	}
 
 				
 }
