@@ -64,27 +64,22 @@ public class Results : MonoBehaviour {
 
 		victoryPanel.transform.GetChild(2).GetComponent<Text>().text = time.ToString();
 
-		victoryPanel.transform.GetChild(3).GetComponent<Text>().text = "Time Bonus Score:" + bonusScoreTime.ToString();
-
 		totalScore = score + storage.GetComponent<SelectionInfo>().WhatIsTheScore();
 
-		victoryPanel.transform.GetChild(4).GetComponent<Text>().text = "Total Score:" + totalScore.ToString();
+		 
+
+
+		victoryPanel.transform.GetChild(3).GetComponent<Text>().text = "Time Bonus Score:" + bonusScoreTime.ToString() + "\n Total Score:" + totalScore.ToString();
 	
 	}
 	public void TurnOnGameOverPanel(int score, int time)
 	{
-
-		gameOverPanel.transform.GetChild(0).GetComponent<Text>().text = "Score:" + score.ToString();
-		gameOverPanel.transform.GetChild(1).GetComponent<Text>().text = "Time Survived:" + time.ToString();
-
 		totalScore = score + storage.GetComponent<SelectionInfo>().WhatIsTheScore();
 
-		gameOverPanel.transform.GetChild(2).GetComponent<Text>().text = "Total Score:" + totalScore.ToString();
 
-
-
-
-
+		gameOverPanel.transform.GetChild(0).GetComponent<Text>().text = "Score:" + score.ToString() + "\nTime Survived:" + time.ToString() + 
+			"\nTotal Score:" + totalScore.ToString();
+	
 		Time.timeScale = 0;
 
 		gameOverPanel.SetActive(true);

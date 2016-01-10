@@ -126,7 +126,23 @@ public class ElsaController : MonoBehaviour {
 				jumpsBeforeAttack = 1;
 				jumpsDoneInSession = 0;
 			}
-		}	
+		}
+											if(transform.position.y <  12.0f) // om bossen skulle missa sitt mål och faller under 12 grader på y axel kommer hon teleporteras till närmaste plattform.
+											{
+												float dist;
+
+												for(int i = 0; i < jumpTargets.Length; i++)
+												{
+													dist = Vector3.Distance(transform.position, jumpTargets[i].transform.position);
+
+
+													if(dist < 10.0f)
+													{
+														transform.position = jumpTargets[i].transform.position;
+														break;
+													}
+												}
+											}
 
 	}
 
