@@ -14,11 +14,13 @@ public class UseAbilityShield : MonoBehaviour {
 	public GameObject pacmanMoveObject;
 	public GameObject frontPoint;
 	public GameObject audioPlayerObject;
+	public GameObject printerObject;
 
 	AudioPlayer audioPlayerScript;
 	AbilityMaster abilityMasterScript;
 	ThrowShiled throwShieldScript;
 	pacmanMove pacmanMoveScript;
+	Printer printerScript;
 
 	float dX;
 	float dZ;
@@ -29,6 +31,7 @@ public class UseAbilityShield : MonoBehaviour {
 	bool canTeleport = false;
 
 	void Start () {
+		printerScript = printerObject.GetComponent<Printer>();
 		audioPlayerScript = audioPlayerObject.GetComponent<AudioPlayer>();
 		pacmanMoveScript = pacmanMoveObject.GetComponent<pacmanMove>();
 		throwShieldScript = throwShieldObject.GetComponent<ThrowShiled>();
@@ -55,6 +58,7 @@ public class UseAbilityShield : MonoBehaviour {
 			canTeleport = true;
 			audioPlayerScript.ShieldTeleportMethod();
 		}else if(Input.GetKeyDown(KeyCode.Space) && abilityMasterScript.ReturnAbilityReady() == false && canTeleport == false){
+			printerScript.PrintInfoText("Your ability is on cooldown");
 			audioPlayerScript.AbilityNotReadyMethod();
 		}
 	
@@ -84,5 +88,8 @@ public class UseAbilityShield : MonoBehaviour {
 		}else if(dX == -1 && dZ == 0){
 			direction = new Vector3(-1.2f, 0, 0);
 		}
+	}
+	public void PacmanDied(){
+		throwShieldObject.gameObject.transform.position = pacmanMoveObject.transform.position;
 	}
 }
