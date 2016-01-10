@@ -19,7 +19,7 @@ public class ThrowShiled : MonoBehaviour {
 	float moveSpeed = 0.1f;
 	float xyzInWall = 0.5f;
 	bool willReturn;
-	bool poweredAbility = false;
+
 
 
 	void Start () {
@@ -78,8 +78,6 @@ public class ThrowShiled : MonoBehaviour {
 			inWallShiledObject.gameObject.transform.position = new Vector3(transform.position.x - xyzInWall, transform.position.y, transform.position.z);
 		}
 	}
-	
-
 	void FixedUpdate () {
 		transform.Translate(direction * moveSpeed);
 	}

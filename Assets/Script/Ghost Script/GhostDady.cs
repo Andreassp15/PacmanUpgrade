@@ -6,12 +6,13 @@ using System.Collections;
 public class GhostDady : MonoBehaviour {
 
 	public GameObject[] ghostForms;
-	GameObject pacman;
-	Transform pacmanPosition;
+	//GameObject pacman;
+	//Transform pacmanPosition;
 	public GameObject nest;
 	public GameObject pointObject;
 	public GameObject PointGhostsHuntingObject;
-	public GameObject guardAreaObject;
+	public GameObject patrollObjectOne;
+	public GameObject patrollObjectTwo;
 	Transform PointGhostsHuntingPosition;
 
 	GameObject[] goldArray;
@@ -20,16 +21,22 @@ public class GhostDady : MonoBehaviour {
 	public bool randomDestination;
 	public bool followAndRandom;
 	public bool guardAreaMode;
+	public bool patrollMode;
+	public bool tutorialMode;
+
+	bool guardThis = false;
 
 	bool followPac = true;
 	bool imHunting = false;
 	bool imEscaping = false;
 	bool imDead = false;
-	NavMeshAgent theAgent;
+//	NavMeshAgent theAgent;
 
-	float distance = 20f;
+	bool firstDestination = true;
+
+
 	float mySpeed = 3f;
-	int huntCount = 6;
+
 
 	Vector3 escapeVector;
 
@@ -37,15 +44,12 @@ public class GhostDady : MonoBehaviour {
 		goldArray = GameObject.FindGameObjectsWithTag("Gold");
 
 		PointGhostsHuntingPosition = PointGhostsHuntingObject.GetComponent<Transform>();
-		pacman = GameObject.FindGameObjectWithTag("FindPacmanObject");
-		pacmanPosition = pacman.gameObject.GetComponent<Transform>();
+		//pacman = GameObject.FindGameObjectWithTag("FindPacmanObject");
+		//pacmanPosition = pacman.gameObject.GetComponent<Transform>();
 
 		InvokeRepeating("RandomDestinationCounter", 0, 10);
 		InvokeRepeating("SwitchPacOrPoint", 0, 30);
-		theAgent = GetComponent<NavMeshAgent>();
-		if(guardAreaMode == true){
-			guardAreaObject.SetActive(true);
-		}
+	//	theAgent = GetComponent<NavMeshAgent>();
 	}
 //-----------------Hunt----------------------
 	public void ActivateHunt(){
@@ -84,13 +88,17 @@ public class GhostDady : MonoBehaviour {
 	}
 //---------------------teleport to nest---------------
 	public void TeleportToNest(){
-		transform.position = nest.gameObject.transform.position;
+		if(tutorialMode != true){
+			transform.position = nest.gameObject.transform.position;
+		}
+
 	}
 //-------------------Deactivate Forms----------------
 	public void DeactivateAll(){
 		imHunting = false;
 		imEscaping = false;
 		imDead = false;
+		guardThis = false;
 		for(int i = 0; i < ghostForms.Length; i++){
 			ghostForms[i].SetActive(false);
 		}
@@ -106,10 +114,22 @@ public class GhostDady : MonoBehaviour {
 			}else if(followAndRandom == true){
 				FollowAndRandomMethod();
 			}else if(guardAreaMode == true){
-				GuardAreaMethod();
+				if(guardThis == true){
+					GuardAreaMethod();
+				}else{
+					GuardReturnToNest();
+				}
+
+			}else if(patrollMode == true){
+				PatrollMethod();
 			}
 		}else if(imEscaping == true){
-			RandomDestinationMethod();
+			if(tutorialMode == true){
+				
+			}else{
+				RandomDestinationMethod();
+			}
+
 			//escapeVector = (pacmanPosition.position - transform.position).normalized;
 			//theAgent.destination = transform.position - escapeVector * distance;
 			//gameObject.GetComponent<NavMeshAgent>().speed = 3.5f;
@@ -127,6 +147,10 @@ public class GhostDady : MonoBehaviour {
 			StartCoroutine(huntAgainTimer());
 		}else if(trigger.gameObject == pointObject && imHunting == true && (randomDestination == true || followAndRandom == true)){
 			RandomDestinationCounter();
+		}else if(trigger.gameObject.tag == "patrollObjectOne" && patrollMode == true){
+			firstDestination = false;
+		}else if(trigger.gameObject.tag == "patrollObjectTwo" && patrollMode == true){
+			firstDestination = true;
 		}
 	}
 	IEnumerator huntAgainTimer(){
@@ -170,8 +194,19 @@ public class GhostDady : MonoBehaviour {
 		pointObject.transform.position = goldArray[randomCoin].gameObject.transform.position;
 	}
 	void GuardAreaMethod(){
-		if(guardAreaObject.gameObject.GetComponent<GuardArea>().ReturnPacmanEnter() == true){
-			gameObject.GetComponent<NavMeshAgent>().SetDestination(PointGhostsHuntingPosition.transform.position);
+		gameObject.GetComponent<NavMeshAgent>().SetDestination(PointGhostsHuntingPosition.transform.position);
+	}
+	void GuardReturnToNest(){
+		gameObject.GetComponent<NavMeshAgent>().SetDestination(nest.transform.position);
+	}
+	void PatrollMethod(){
+		if(firstDestination == true){
+			gameObject.GetComponent<NavMeshAgent>().SetDestination (patrollObjectOne.transform.position);
+		}else if(firstDestination == false){
+			gameObject.GetComponent<NavMeshAgent>().SetDestination (patrollObjectTwo.transform.position);
 		}
+	}
+	public void PacmanInGuardArea(){
+		guardThis = true;
 	}
 }

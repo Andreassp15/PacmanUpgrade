@@ -12,12 +12,12 @@ public class TeleportOneWay : MonoBehaviour {
 	public GameObject audioPlayerObject;
 	AudioPlayer audioPlayerScript;
 	GameObject pacmanMoveObject;
-	Transform pacmanObject;
+	//Transform pacmanObject;
 
 	void Start () {
 		audioPlayerScript = audioPlayerObject.GetComponent<AudioPlayer>();
 		pacmanMoveObject = GameObject.FindGameObjectWithTag("FindPacmanObject");
-		pacmanObject = pacmanMoveObject.GetComponent<Transform>();
+		//pacmanObject = pacmanMoveObject.GetComponent<Transform>();
 	}
 	public void TeleportPacman(GameObject theTeleport){
 		audioPlayerScript.PacmanteleportMethod();
