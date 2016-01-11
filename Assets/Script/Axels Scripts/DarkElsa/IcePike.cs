@@ -6,6 +6,8 @@ public class IcePike : MonoBehaviour {
 	float lifetime = 0f;
 
 	public ParticleSystem poof;
+	public ParticleSystem warning;
+
 
 	void Update()
 	{
@@ -13,8 +15,9 @@ public class IcePike : MonoBehaviour {
 
 		if(lifetime > 2.0f)
 		{
-			gameObject.SetActive(false);
+			poof.Emit(50);
 
+			gameObject.SetActive(false);
 
 			lifetime = 0.0f;
 		}

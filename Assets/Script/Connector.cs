@@ -84,10 +84,10 @@ public class Connector : MonoBehaviour {
 			AddGoldMethod(1);
 //-----------------------Hit Courage--------------------------
 		}else if(trigger.gameObject.tag == "Courage"){
-			courageCounter = 15;
+			courageCounter = 10;
 			trigger.gameObject.transform.parent.gameObject.SetActive(false);
 			audioPlayerScript.EatCourageMethod();
-			int courageBonus = 15;
+			int courageBonus = 10;
 			if(courageActive == false){
 				courageActive = true;
 				InvokeRepeating("CourageActiveTimer", 0, 1);
@@ -118,7 +118,6 @@ public class Connector : MonoBehaviour {
 		}else if(trigger.gameObject.tag == "Explosives"){
 			PacmanLoseLife(trigger.gameObject.name);
 			//PrinterScript.PrintInfoText("You been killed by " + trigger.gameObject.name);
-			Debug.Log("hit by Explosive");
 		}else if (trigger.gameObject.tag == "Teleport"){
 			teleportOneWayScript.TeleportPacman(trigger);
 //-----------------------Poison----------------------------
@@ -126,11 +125,22 @@ public class Connector : MonoBehaviour {
 			trigger.gameObject.SetActive(false);
 			PoisonCounter(trigger.gameObject.name);
 			audioPlayerScript.PacmanHitPoison();
+//----------------------PowerCharge-------------------------
 		}else if( trigger.gameObject.tag == "PowerCharge"){
 			abilityMasterScript.IncreasePoweredAbility(1);
 			trigger.gameObject.transform.parent.gameObject.SetActive(false);
 			audioPlayerScript.EatPowerChargeMethod();
+//-----------------------DropZone--------------------------------
+		}else if(trigger.gameObject.tag == "DropZone"){
+			PacmanMoveScript.ActivatePacmanFalling();
+			StartCoroutine(PacmanFalling(trigger.gameObject.name));
 		}
+	}
+	IEnumerator PacmanFalling(string killer){
+		yield return new WaitForSeconds(3f);
+		PacmanMoveScript.DeactivatePacmanFalling();
+		PacmanLoseLife(killer);
+
 	}
 //------------------------Courage Active Timer-----------------
 	void CourageActiveTimer(){
@@ -190,6 +200,7 @@ public class Connector : MonoBehaviour {
 			PacmanMoveScript.gameObject.SetActive(false);
 			PacmanMoveScript.TeleportToSpawnPoint();
 			ResetPoisonCount();
+			abilityMasterScript.PacmanLoseLife();
 			ghostMasterScript.ResetGhost();//teleports ghost to nest
 			PrinterScript.PrintInfoText("You been killed by " + killer);
 			InvokeRepeating("RespawnTimer",0, 1);
@@ -277,7 +288,7 @@ public class Connector : MonoBehaviour {
 		}
 		else{
 			poisonCount = poisonCount -1;
-			PrinterScript.PrintInfoArrows("You been poisoned, take ", poisonCount, " more arrows and you are done");
+			PrinterScript.PrintInfoText("Aaoh! Arrows Hurts");
 		}
 	}
 	void ResetPoisonCount(){
