@@ -26,6 +26,8 @@ public class FloatingBridges : MonoBehaviour {
 
 	private int bridgesFallenAfterMe;
 
+	private bool pacmanInAir;
+
 
 	void Start () {
 
@@ -40,6 +42,7 @@ public class FloatingBridges : MonoBehaviour {
 		mySiblings = new GameObject[gameObject.transform.parent.gameObject.transform.childCount];
 		downedBridges = new List<int>();
 
+		pacmanInAir = false;
 
 
 
@@ -116,6 +119,8 @@ public class FloatingBridges : MonoBehaviour {
 
 		child_BridgePieceCollider[o].gameObject.transform.GetChild(0).transform.position = originalPositions[o]; // brodelarna har fått sina ursprungliga värden för position och rotation sparade, som de nu
 		child_BridgePieceCollider[o].gameObject.transform.GetChild(0).transform.rotation = originalRotation[o]; //blir återställde till.
+		child_BridgePieceCollider[o].gameObject.transform.GetChild(0).transform.gameObject.tag = "Untagged";
+
 	}
 	public bool MyStatus()
 	{
@@ -134,5 +139,13 @@ public class FloatingBridges : MonoBehaviour {
 				myNumber = i;
 			}
 		}
+	}
+	public bool IsPacmanInAir()
+	{
+		return pacmanInAir;
+	}
+	public void SetPacmanInAir(bool o)
+	{
+		pacmanInAir = o;
 	}
 }
