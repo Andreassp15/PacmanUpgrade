@@ -11,60 +11,47 @@ public class BreakingIce : MonoBehaviour {
 	private GameObject iceTextureCube; //Objectet som ska byta texture.
 
 	private Material crackedIce;
-	private Material brokenIce;
+	private Material noIce;
 
 	void Start () {
 	
+		gameObject.name = "Ice Mist";
+
 		timesPacHasEntered = 0;
 
 
 
 		iceTextureCube = this.gameObject.transform.GetChild(0).gameObject;
 
-		crackedIce = Resources.Load("Ice") as Material;
-		brokenIce = Resources.Load("BrokenIce") as Material;
+		crackedIce = Resources.Load("BrokenIce") as Material;
+		noIce = Resources.Load("NoIce") as Material;
 	}
-
-	void Update () {
-
-	}
-
-	void OnTriggerEnter(Collider col)
-	{
-
-		if(col.gameObject.tag == ("Pacman") && timesPacHasEntered != 2) //räknar hur många gånger pacman gått på en isbit.
-		{
-			
-			timesPacHasEntered++;
-
-
-		}
-
-
-	}
-
+		
+		
 	void OnTriggerExit(Collider col)
 	{
 			if(col.gameObject.tag == ("Pacman"))
 			{
 
-
-
-									if(timesPacHasEntered == 2) //Dett händer om man gått av isbiten en gång.
+										timesPacHasEntered++;
+									if(timesPacHasEntered == 3) //Dett händer om man gått av isbiten en gång.
 									{
+				
 										gameObject.tag = "DropZone";
 
-										transform.localScale.Scale(new Vector3(.1f, 1f, .1f));
 															
-										iceTextureCube.GetComponent<MeshRenderer>().sharedMaterial = brokenIce;
+										iceTextureCube.GetComponent<MeshRenderer>().sharedMaterial = noIce;
 										transform.GetChild(1).GetComponent<ParticleSystem>().Emit(500);
+
+										
 
 									}
 			if(col.gameObject.tag == ("Pacman") && timesPacHasEntered == 1)  //Detta händer om man gått av isbiten andra gången.
 			{
 				iceTextureCube.GetComponent<MeshRenderer>().sharedMaterial = crackedIce;
-				transform.GetChild(1).GetComponent<ParticleSystem>().Emit(250);
+				transform.GetChild(1).GetComponent<ParticleSystem>().Emit(50);
 			}
+
 
 	}
 	}
