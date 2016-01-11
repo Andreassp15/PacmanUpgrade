@@ -42,7 +42,7 @@ public class Connector : MonoBehaviour {
 
 	public GameObject PrinterObject;
 	Printer PrinterScript;
-	/*void Awake(){
+	void Awake(){
 		GameObject selectObject = GameObject.Find("SelectionInfo");
 		int pacmanNumber = selectObject.gameObject.GetComponent<SelectionInfo>().WhatCharacter();
 		if(pacmanNumber == 1){
@@ -53,7 +53,7 @@ public class Connector : MonoBehaviour {
 			pacmanJonObject.SetActive(true);
 
 		}
-	}*/
+	}
 
 	void Start () {
 		mapTime = startMapTime;
@@ -125,11 +125,22 @@ public class Connector : MonoBehaviour {
 			trigger.gameObject.SetActive(false);
 			PoisonCounter(trigger.gameObject.name);
 			audioPlayerScript.PacmanHitPoison();
+//----------------------PowerCharge-------------------------
 		}else if( trigger.gameObject.tag == "PowerCharge"){
 			abilityMasterScript.IncreasePoweredAbility(1);
 			trigger.gameObject.transform.parent.gameObject.SetActive(false);
 			audioPlayerScript.EatPowerChargeMethod();
+//-----------------------DropZone--------------------------------
+		}else if(trigger.gameObject.tag == "DropZone"){
+			PacmanMoveScript.ActivatePacmanFalling();
+			StartCoroutine(PacmanFalling(trigger.gameObject.name));
 		}
+	}
+	IEnumerator PacmanFalling(string killer){
+		yield return new WaitForSeconds(3f);
+		PacmanMoveScript.DeactivatePacmanFalling();
+		PacmanLoseLife(killer);
+
 	}
 //------------------------Courage Active Timer-----------------
 	void CourageActiveTimer(){

@@ -1,0 +1,219 @@
+fileFormatVersion: 2
+guid: 6236e670d9df8f64ea83dc12e4634bab
+timeCreated: 1452354936
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Head
+    100002: Head_End
+    100004: L_Collar
+    100006: L_foot
+    100008: L_Hand
+    100010: L_Hand_End
+    100012: L_LWL_leg
+    100014: L_LWR_Arm
+    100016: L_toe
+    100018: L_toe_end
+    100020: L_UPL_leg
+    100022: L_UPR_Arm
+    100024: Neck_01
+    100026: polySurface19
+    100028: R_Collar
+    100030: R_foot
+    100032: R_Hand
+    100034: R_Hand_End
+    100036: R_LWR_Arm
+    100038: R_LWR_leg
+    100040: R_toe
+    100042: R_toe_end
+    100044: R_UPR_Arm
+    100046: R_UPR_leg
+    100048: Root
+    100050: Spine_01
+    100052: Spine_02
+    100054: Spine_03
+    100056: //RootNode
+    400000: Head
+    400002: Head_End
+    400004: L_Collar
+    400006: L_foot
+    400008: L_Hand
+    400010: L_Hand_End
+    400012: L_LWL_leg
+    400014: L_LWR_Arm
+    400016: L_toe
+    400018: L_toe_end
+    400020: L_UPL_leg
+    400022: L_UPR_Arm
+    400024: Neck_01
+    400026: polySurface19
+    400028: R_Collar
+    400030: R_foot
+    400032: R_Hand
+    400034: R_Hand_End
+    400036: R_LWR_Arm
+    400038: R_LWR_leg
+    400040: R_toe
+    400042: R_toe_end
+    400044: R_UPR_Arm
+    400046: R_UPR_leg
+    400048: Root
+    400050: Spine_01
+    400052: Spine_02
+    400054: Spine_03
+    400056: //RootNode
+    4300000: polySurface19
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: polySurface19
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 60
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: polySurface19
+        weight: 1
+      - path: Root
+        weight: 1
+      - path: Root/L_UPL_leg
+        weight: 1
+      - path: Root/L_UPL_leg/L_LWL_leg
+        weight: 1
+      - path: Root/L_UPL_leg/L_LWL_leg/L_foot
+        weight: 1
+      - path: Root/L_UPL_leg/L_LWL_leg/L_foot/L_toe
+        weight: 1
+      - path: Root/L_UPL_leg/L_LWL_leg/L_foot/L_toe/L_toe_end
+        weight: 1
+      - path: Root/R_UPR_leg
+        weight: 1
+      - path: Root/R_UPR_leg/R_LWR_leg
+        weight: 1
+      - path: Root/R_UPR_leg/R_LWR_leg/R_foot
+        weight: 1
+      - path: Root/R_UPR_leg/R_LWR_leg/R_foot/R_toe
+        weight: 1
+      - path: Root/R_UPR_leg/R_LWR_leg/R_foot/R_toe/R_toe_end
+        weight: 1
+      - path: Root/Spine_01
+        weight: 1
+      - path: Root/Spine_01/Spine_02
+        weight: 1
+      - path: Root/Spine_01/Spine_02/Spine_03
+        weight: 1
+      - path: Root/Spine_01/Spine_02/Spine_03/L_Collar
+        weight: 1
+      - path: Root/Spine_01/Spine_02/Spine_03/L_Collar/L_UPR_Arm
+        weight: 1
+      - path: Root/Spine_01/Spine_02/Spine_03/L_Collar/L_UPR_Arm/L_LWR_Arm
+        weight: 1
+      - path: Root/Spine_01/Spine_02/Spine_03/L_Collar/L_UPR_Arm/L_LWR_Arm/L_Hand
+        weight: 1
+      - path: Root/Spine_01/Spine_02/Spine_03/L_Collar/L_UPR_Arm/L_LWR_Arm/L_Hand/L_Hand_End
+        weight: 1
+      - path: Root/Spine_01/Spine_02/Spine_03/Neck_01
+        weight: 1
+      - path: Root/Spine_01/Spine_02/Spine_03/Neck_01/Head
+        weight: 1
+      - path: Root/Spine_01/Spine_02/Spine_03/Neck_01/Head/Head_End
+        weight: 1
+      - path: Root/Spine_01/Spine_02/Spine_03/R_Collar
+        weight: 1
+      - path: Root/Spine_01/Spine_02/Spine_03/R_Collar/R_UPR_Arm
+        weight: 1
+      - path: Root/Spine_01/Spine_02/Spine_03/R_Collar/R_UPR_Arm/R_LWR_Arm
+        weight: 1
+      - path: Root/Spine_01/Spine_02/Spine_03/R_Collar/R_UPR_Arm/R_LWR_Arm/R_Hand
+        weight: 1
+      - path: Root/Spine_01/Spine_02/Spine_03/R_Collar/R_UPR_Arm/R_LWR_Arm/R_Hand/R_Hand_End
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
