@@ -18,7 +18,7 @@ public class AbilityMaster : MonoBehaviour {
 	public GameObject audioPlayerObject;
 
 	Printer printerScript;
-	Connector connectorScript;
+//	Connector connectorScript;
 	AudioPlayer audioPlayerScript;
 
 	GameObject abilityObject;
@@ -31,10 +31,12 @@ public class AbilityMaster : MonoBehaviour {
 	bool poweredAbilityReady = false;
 	bool poweredAbilityUsed = false;
 
+
 	void Start () {
+		
 		audioPlayerScript = audioPlayerObject.GetComponent<AudioPlayer>();
 		printerScript = printeObject.GetComponent<Printer>();
-		connectorScript = connectorObject.GetComponent<Connector>();
+		//connectorScript = connectorObject.GetComponent<Connector>();
 		pacmanObject = GameObject.FindGameObjectWithTag("FindPacmanObject");
 		printerScript.PrintPowerCharges(poweredAbility);
 		printerScript.AbilityCoolDownText(abilityCooldown);
@@ -117,10 +119,10 @@ public class AbilityMaster : MonoBehaviour {
 			poweredAbilityReady = true;
 			ActivatePowerVisual();
 		}else if (Input.GetKeyDown(KeyCode.E) && poweredAbility >= 1 && abilityReady == false){
-			printerScript.PrintInfoText("Ability must be ready");
+			printerScript.PrintInfoText("Your ability must be ready");
 			audioPlayerScript.AbilityNotReadyMethod();
 		}else if(Input.GetKeyDown(KeyCode.E) && poweredAbility == 0){
-			printerScript.PrintInfoText("You must aquire a Power Charge to power you ability");
+			printerScript.PrintInfoText("You must aquire a Power Charge to power your ability");
 			audioPlayerScript.AbilityNotReadyMethod();
 		}
 	}
@@ -147,5 +149,14 @@ public class AbilityMaster : MonoBehaviour {
 		poweredAbilityReady = false;
 		poweredAbilityUsed = false;
 		DeactivatePoweredVisual();
+	}
+	public void TutorialModeOne(){
+		
+	}
+//-------Pacman Died---------------------------
+	public void PacmanLoseLife(){
+		if(pacmanObject.gameObject.name == "PacmanKai"){
+			useShieldAbilityObject.gameObject.GetComponent<UseAbilityShield>().PacmanDied();
+		}
 	}
 }

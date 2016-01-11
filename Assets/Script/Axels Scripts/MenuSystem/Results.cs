@@ -20,6 +20,8 @@ public class Results : MonoBehaviour {
 
 	private bool tutorialsDone;
 
+	private int totalScore;
+
 	void Start () {
 
 		tutorialsDone = false;
@@ -62,13 +64,22 @@ public class Results : MonoBehaviour {
 
 		victoryPanel.transform.GetChild(2).GetComponent<Text>().text = time.ToString();
 
-		victoryPanel.transform.GetChild(3).GetComponent<Text>().text = bonusScoreTime.ToString();
+		totalScore = score + storage.GetComponent<SelectionInfo>().WhatIsTheScore();
+
+		 
+
+
+		victoryPanel.transform.GetChild(3).GetComponent<Text>().text = "Time Bonus Score:" + bonusScoreTime.ToString() + "\n Total Score:" + totalScore.ToString();
 	
 	}
 	public void TurnOnGameOverPanel(int score, int time)
 	{
+		totalScore = score + storage.GetComponent<SelectionInfo>().WhatIsTheScore();
 
 
+		gameOverPanel.transform.GetChild(0).GetComponent<Text>().text = "Score:" + score.ToString() + "\nTime Survived:" + time.ToString() + 
+			"\nTotal Score:" + totalScore.ToString();
+	
 		Time.timeScale = 0;
 
 		gameOverPanel.SetActive(true);
@@ -78,6 +89,8 @@ public class Results : MonoBehaviour {
 	{
 		Scene[] sceneList = new Scene[SceneManager.sceneCountInBuildSettings];
 		sceneList = SceneManager.GetAllScenes();
+
+		storage.GetComponent<SelectionInfo>().TotalScore(totalScore);
 
 		Scene currentScene = SceneManager.GetActiveScene();
 

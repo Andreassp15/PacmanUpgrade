@@ -35,7 +35,7 @@ public class pacmanMove : MonoBehaviour {
 	void Start () {
 
 		dZ = 1f;
-		moveSpeed = normalSpeed;
+		moveSpeed = dontMove;
 		boxMovementScriptFront = frontBox.gameObject.GetComponent<boxMovement>();
 		boxMovementScriptRight = rightBox.gameObject.GetComponent<boxMovement>();
 		boxMovementScriptBack = backBox.gameObject.GetComponent<boxMovement>();
@@ -96,6 +96,9 @@ public class pacmanMove : MonoBehaviour {
 			}else{
 				savedTurn = 4;
 			}
+		}
+		if(Input.GetKeyDown(KeyCode.F)){
+			DontMoveMethod();
 		}
 	}
 //----------------Give Pacman Speed-----------------
