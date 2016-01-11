@@ -28,6 +28,11 @@ public class NewBossEvent : MonoBehaviour {
 	TrollKing playAnimation;
 
 
+	//----------------Sounds---------//
+	public AudioPlayer sounds;
+	AudioPlayer soundActivate;
+
+
 
 	//------------Bombzones och SpawnsZones---------------//
 	public GameObject[] bZones;//Here goes all the zones that pacman can trigger for the boss to throw the bomb.
@@ -38,7 +43,11 @@ public class NewBossEvent : MonoBehaviour {
 	// Here all the zones are set to off so the boss wont throw bombs from the start, also this turns of the bomb so that it wont just float arround randomly on the map.
 	public void Start()
 	{
+		soundActivate = sounds.GetComponent<AudioPlayer> ();
+		soundActivate.BackgroundMusicMethod ();
+
 		playAnimation = trollKing.GetComponent<TrollKing> ();
+
 		ballSpawn = bomb.GetComponent<BombForceStart> ();
 		bomb.SetActive (false);
 		killZoneOne.SetActive (false);
@@ -66,6 +75,7 @@ public class NewBossEvent : MonoBehaviour {
 				Invoke ("BombReturn", bombGoBoom);
 				Invoke ("ExplosionOne", 5f);
 				playAnimation.PlayThrowAnimaton ();
+				soundActivate.TrollTalk ();
 			}
 			else if(existBomb == null && bZones[1] == theObject)
 			{
@@ -74,6 +84,7 @@ public class NewBossEvent : MonoBehaviour {
 				Invoke ("BombReturn", bombGoBoom);
 				Invoke ("ExplosionTwo", 5f);
 				playAnimation.PlayThrowAnimaton ();
+				soundActivate.TrollTalk ();
 			}
 			else if(existBomb == null && bZones[2] == theObject)
 			{
@@ -82,6 +93,7 @@ public class NewBossEvent : MonoBehaviour {
 				Invoke ("BombReturn", bombGoBoom);
 				Invoke ("ExplosionThree", 5f);
 				playAnimation.PlayThrowAnimaton ();
+				soundActivate.TrollTalk ();
 			}
 			else if(existBomb == null && bZones[3] == theObject)
 			{
@@ -90,6 +102,7 @@ public class NewBossEvent : MonoBehaviour {
 				Invoke ("BombReturn", bombGoBoom);
 				Invoke ("ExplosionFour", 5f);
 				playAnimation.PlayThrowAnimaton ();
+				soundActivate.TrollTalk ();
 			}
 			else if(existBomb == null && bZones[4] == theObject)
 			{
@@ -98,6 +111,7 @@ public class NewBossEvent : MonoBehaviour {
 				Invoke ("BombReturn", bombGoBoom);
 				Invoke ("ExplosionFive", 5f);
 				playAnimation.PlayThrowAnimaton ();
+				soundActivate.TrollTalk ();
 			}
 			else if(existBomb == null && bZones[5] == theObject)
 			{
@@ -106,6 +120,7 @@ public class NewBossEvent : MonoBehaviour {
 				Invoke ("BombReturn", bombGoBoom);
 				Invoke ("ExplosionSix", 5f);
 				playAnimation.PlayThrowAnimaton ();
+				soundActivate.TrollTalk ();
 			}
 			else if(existBomb == null && bZones[6] == theObject)
 			{
@@ -114,6 +129,7 @@ public class NewBossEvent : MonoBehaviour {
 				Invoke ("BombReturn", bombGoBoom);
 				Invoke ("ExplosionSeven", 5f);
 				playAnimation.PlayThrowAnimaton ();
+				soundActivate.TrollTalk ();
 			}
 			else if(existBomb == null && bZones[7] == theObject)
 			{
@@ -122,6 +138,7 @@ public class NewBossEvent : MonoBehaviour {
 				Invoke ("BombReturn", bombGoBoom);
 				Invoke ("ExplosionEight", 5f);
 				playAnimation.PlayThrowAnimaton ();
+				soundActivate.TrollTalk ();
 			}
 	
 		}
@@ -150,36 +167,42 @@ public class NewBossEvent : MonoBehaviour {
 	{
 		killZoneOne.SetActive (true);
 		Invoke ("ExplosionOff", bombZoneOn);
+		soundActivate.TrollBombExplodeMethod ();
 	}
 
 	public void ExplosionTwo()
 	{
 		killZoneTwo.SetActive (true);
 		Invoke ("ExplosionOff", bombZoneOn);
+		soundActivate.TrollBombExplodeMethod ();
 	}
 
 	public void ExplosionThree()
 	{
 		killZoneThree.SetActive (true);
 		Invoke ("ExplosionOff", bombZoneOn);
+		soundActivate.TrollBombExplodeMethod ();
 	}
 
 	public void ExplosionFour()
 	{
 		killZoneFour.SetActive (true);
 		Invoke ("ExplosionOff", bombZoneOn);
+		soundActivate.TrollBombExplodeMethod ();
 	}
 
 	public void ExplosionFive()
 	{
 		killZoneFive.SetActive (true);
 		Invoke ("ExplosionOff", bombZoneOn);
+		soundActivate.TrollBombExplodeMethod ();
 	}
 
 	public void ExplosionSix()
 	{
 		killZoneSix.SetActive (true);
 		Invoke ("ExplosionOff", bombZoneOn);
+		soundActivate.TrollBombExplodeMethod ();
 	}
 
 	public void ExplosionSeven()
@@ -192,6 +215,7 @@ public class NewBossEvent : MonoBehaviour {
 	{
 		killZoneEight.SetActive (true);
 		Invoke ("ExplosionOff", bombZoneOn);
+		soundActivate.TrollBombExplodeMethod ();
 	}
 
 	//This turns these zones off so that the player can renter the zones so you can get the coins and powerups.
