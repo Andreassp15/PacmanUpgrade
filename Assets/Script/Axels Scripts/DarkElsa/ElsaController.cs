@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
+
 
 public class ElsaController : MonoBehaviour {
 
-	public GameObject pacman;
+	private GameObject pacman;
 
 	private Vector3 fwd;
 
 	private Vector3 jumpSpeed;
 	public float rotationSpeed;
+
+	private float time;
 
 	public Transform[] jumpTargets;
 	private int target;
@@ -17,6 +20,7 @@ public class ElsaController : MonoBehaviour {
 
 	private int jumpsDoneInSession;
 	private int jumpsBeforeAttack;
+	private int fireCheckpointsLit;
 
 	private float rotationInput;
 	protected float jumpInput;
@@ -25,15 +29,58 @@ public class ElsaController : MonoBehaviour {
 	private bool needNewTarget;
 	private bool targetSighted;
 	private bool inPosition;
+	private bool attacking;
 
 	private float iceSpikeGo;
 	private bool spikeTargetSet;
-	public GameObject iceSpike;
+	private GameObject[] iceSpikes;
+	public GameObject iceSpikeDady;
+	public ParticleSystem warning;
+
+	private List<GameObject> bridgesList;
+
+	private GameObject bridgeMama;
+
+	private Animator elsaAnimator;
+
+	private List<GameObject> fireCheckpoints;
+
+
 
 
 
 	void Start()
 	{
+		iceSpikes = new GameObject[4];
+
+		fireCheckpoints = new List<GameObject>();
+
+		for(int i = 0; i < 8; i++)
+		{
+			fireCheckpoints.Add(transform.parent.GetChild(1).GetChild(i).gameObject);
+		}
+		for(int i = 0; i < 4; i++)
+		{
+			iceSpikes[i] = transform.parent.GetChild(i + 2).gameObject;
+			iceSpikes[i].transform.GetChild(0).gameObject.SetActive(false);
+		}
+
+		fireCheckpointsLit = 0;
+
+		elsaAnimator = transform.GetChild(0).GetComponent<Animator>();
+
+		pacman = GameObject.FindGameObjectWithTag("Pacman");
+
+		bridgeMama = GameObject.Find("AllBridges");
+		bridgesList = new List<GameObject>();
+
+		for(int i = 0; i < bridgeMama.transform.childCount; i++)
+		{
+			bridgesList.Add(bridgeMama.transform.GetChild(i).transform.gameObject);
+		}
+
+		time = 0f;
+
 		lastTarget = 0;
 
 		jumpsBeforeAttack = 5;
@@ -49,15 +96,12 @@ public class ElsaController : MonoBehaviour {
 		needNewTarget = false;
 		targetSighted = true;
 		inPosition = false;
+		attacking = false;
 
 		currentPosision = 0;
 
 
 		target = 1;
-
-		iceSpikeGo = 0.3f;
-
-		iceSpike.SetActive(false);
 
 	}
 
@@ -69,7 +113,7 @@ public class ElsaController : MonoBehaviour {
 			}
 		if(jumpsDoneInSession == jumpsBeforeAttack)
 		{
-			transform.position = Vector3.Lerp(transform.position, jumpTargets[target].transform.position, 2.0f * Time.deltaTime);
+			transform.position = Vector3.Lerp(transform.position, jumpTargets[target].transform.position, 3.0f * Time.deltaTime);
 		}
 	}
 	void Update()
@@ -91,24 +135,50 @@ public class ElsaController : MonoBehaviour {
 		else
 		{
 			
-			if(Vector3.Distance(transform.position, pacman.transform.position) < 16.0f)
+			if(Vector3.Distance(transform.position, pacman.transform.position) < 16.0f && PacmanInAir() == false)
 			{
-				if(Vector3.Distance(transform.position, jumpTargets[target].transform.position) < 0.5f)
-						{
-						IceSpikeAttack();
-						}
+
+
+
+				if(Vector3.Distance(transform.position, jumpTargets[target].transform.position) < 0.5f && attacking == false)
+					{
+										if(fireCheckpointsLit < 5)
+											{
+											IceSpikeAttack();
+											}
+										else
+											{
+											MultiSpikeAttack();
+											}
+					}
 			}
 			else
 			{
 				jumpsBeforeAttack = 1;
 				jumpsDoneInSession = 0;
 			}
-		}	
+		}
+											if(transform.position.y <  12.0f) // om bossen skulle missa sitt mål och faller under 12 grader på y axel kommer hon teleporteras till närmaste plattform.
+											{
+												float dist;
+
+												for(int i = 0; i < jumpTargets.Length; i++)
+												{
+													dist = Vector3.Distance(transform.position, jumpTargets[i].transform.position);
+
+
+													if(dist < 10.0f)
+													{
+														transform.position = jumpTargets[i].transform.position;
+														break;
+													}
+												}
+											}
 
 	}
 
 
-	private Vector3 CalculateVel(Vector3 origin, Vector3 target, float timeToTarget)
+	private Vector3 CalculateVel(Vector3 origin, Vector3 target, float timeToTarget) // Denna metod räknar ut den kraft som behövs för att skjuta ett object till en plats.
 	{
 		Vector3 toTarget = target - origin;
 		Vector3 toTargetXZ = toTarget;
@@ -130,7 +200,7 @@ public class ElsaController : MonoBehaviour {
 
 		return result;
 	}
-	private void ChoseTarget()
+	private void ChoseTarget() //Denna metod är för att välja en platform att hoppa till.
 	{
 
 		target = Random.Range(0, 4);
@@ -177,8 +247,10 @@ public class ElsaController : MonoBehaviour {
 
 	}
 
-	private void DarkElsaJump()
+	private void DarkElsaJump() // För att röra bossen använder vi force.
 	{
+		elsaAnimator.Play("Take 001");
+
 		GetComponent<Rigidbody>().isKinematic = false;
 
 		jumpSpeed =  CalculateVel(transform.position, jumpTargets[target].position, 1f);
@@ -188,17 +260,17 @@ public class ElsaController : MonoBehaviour {
 
 
 	}
-	private void DarkElsaRotate(Vector3 newDirection)
+	private void DarkElsaRotate(Vector3 newDirection) // bossen roterar fult men det duger.
 	{
 		transform.LookAt(newDirection);
 	}
 
 
-	private void IsTouchDown()
+	private void IsTouchDown()// när bossen landar ska den bli kinematic igen.
 	{
 		if(transform.position.y - jumpTargets[target].transform.position.y < 0.5f && Vector3.Distance(transform.position, jumpTargets[target].transform.position) < 3.0f)
 		{
-			
+			elsaAnimator.Play("Take 0011");
 
 			jumpsDoneInSession++;
 
@@ -218,25 +290,89 @@ public class ElsaController : MonoBehaviour {
 	}
 	private void IceSpikeAttack()
 	{
-		iceSpikeGo = iceSpikeGo + Time.deltaTime;
-
-
-		if(spikeTargetSet == false)
+		if(spikeTargetSet == false && attacking == false)
 		{
-			iceSpike.gameObject.transform.position = pacman.gameObject.transform.position;
+			elsaAnimator.Play("Take 001 0");
+			iceSpikes[0].transform.GetChild(2).gameObject.SetActive(true);
+			iceSpikes[0].gameObject.transform.position = pacman.gameObject.transform.position;
+			attacking = true;
 			spikeTargetSet = true;
-		}
 
-		if(iceSpikeGo > 0.5f)
-		{
-			iceSpike.SetActive(true);
-
-			jumpsDoneInSession = 0;
-
-			iceSpikeGo = 0;
-			spikeTargetSet = false;
-
-			jumpsBeforeAttack = Random.Range(5,11);
+			Invoke("IceSpikeSpawn", Random.Range(0.5f, 0.9f));
 		}
 	}
+	private void IceSpikeSpawn()
+	{
+		foreach(GameObject t in iceSpikes)
+		{
+			t.transform.GetChild(0).gameObject.SetActive(true);
+			t.transform.GetChild(2).gameObject.SetActive(false);
+		}
+		spikeTargetSet = false;
+
+		Invoke("ReSetJumps", 1.5f);
+	}
+	private void MultiSpikeAttack()
+	{
+		float minDist = Mathf.Infinity;
+
+		elsaAnimator.Play("Take 001 0");
+
+		GameObject closestFireCheckpoint = new GameObject();
+
+		attacking = true;
+
+		foreach (GameObject t in fireCheckpoints)
+		{
+			float dist = Vector3.Distance(pacman.transform.position, t.transform.position);
+			if(dist < minDist)
+			{
+				closestFireCheckpoint = t;
+
+				minDist = dist;
+			}
+		}
+
+		closestFireCheckpoint.GetComponent<Fire_Checkpoints>().MultiSpikeAttack();
+
+		Invoke("IceSpikeSpawn", Random.Range(0.5f, 0.9f));
+
+	}
+	private bool PacmanInAir()
+				{
+					bool verdict = new bool();
+
+
+					for(int i = 0; i < bridgesList.Count; i++)
+					{
+
+						if(bridgesList[i].GetComponent<FloatingBridges>().IsPacmanInAir() == true)
+						{
+							verdict = true;
+
+							break;
+						}
+						else
+						{
+							verdict = false;
+						}
+
+						
+						}
+					return verdict;
+
+				}
+	public void ReSetJumps()
+	{
+			jumpsDoneInSession = 0;
+			jumpsBeforeAttack = Random.Range(5,9);
+			attacking = false;
+
+	}
+	public void AddFireCheckpoint()
+	{
+		fireCheckpointsLit++;
+	}
+
+				
 }

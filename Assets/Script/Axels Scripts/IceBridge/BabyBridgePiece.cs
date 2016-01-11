@@ -38,8 +38,16 @@ public class BabyBridgePiece : MonoBehaviour {
 		
 		if(col.gameObject.tag == ("Pacman"))
 		{
-			
+			gameObject.tag = "DropZone";
 			mama.LetItFall(whoAmI);
+			mama.SetPacmanInAir(false);
+		}
+	}
+	void OnTriggerEnter(Collider col)
+	{
+		if(col.gameObject.tag == ("Pacman"))
+		{
+			mama.SetPacmanInAir(true);
 		}
 	}
 }
