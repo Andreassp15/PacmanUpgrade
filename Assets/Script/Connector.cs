@@ -42,7 +42,7 @@ public class Connector : MonoBehaviour {
 
 	public GameObject PrinterObject;
 	Printer PrinterScript;
-	/*void Awake(){
+	void Awake(){
 		GameObject selectObject = GameObject.Find("SelectionInfo");
 		int pacmanNumber = selectObject.gameObject.GetComponent<SelectionInfo>().WhatCharacter();
 		if(pacmanNumber == 1){
@@ -53,7 +53,7 @@ public class Connector : MonoBehaviour {
 			pacmanJonObject.SetActive(true);
 
 		}
-	}*/
+	}
 
 	void Start () {
 		mapTime = startMapTime;
