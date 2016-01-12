@@ -42,7 +42,7 @@ public class Connector : MonoBehaviour {
 
 	public GameObject PrinterObject;
 	Printer PrinterScript;
-	void Awake(){
+	/*void Awake(){
 		GameObject selectObject = GameObject.Find("SelectionInfo");
 		int pacmanNumber = selectObject.gameObject.GetComponent<SelectionInfo>().WhatCharacter();
 		if(pacmanNumber == 1){
@@ -53,7 +53,7 @@ public class Connector : MonoBehaviour {
 			pacmanJonObject.SetActive(true);
 
 		}
-	}
+	}*/
 
 	void Start () {
 		mapTime = startMapTime;
@@ -133,7 +133,14 @@ public class Connector : MonoBehaviour {
 //-----------------------DropZone--------------------------------
 		}else if(trigger.gameObject.tag == "DropZone"){
 			PacmanMoveScript.ActivatePacmanFalling();
+			StartCoroutine(PacmanFalling(trigger.gameObject.name));
 		}
+	}
+	IEnumerator PacmanFalling(string killer){
+		yield return new WaitForSeconds(3f);
+		PacmanMoveScript.DeactivatePacmanFalling();
+		PacmanLoseLife(killer);
+
 	}
 //------------------------Courage Active Timer-----------------
 	void CourageActiveTimer(){
@@ -198,7 +205,6 @@ public class Connector : MonoBehaviour {
 			PrinterScript.PrintInfoText("You been killed by " + killer);
 			InvokeRepeating("RespawnTimer",0, 1);
 		}
-		PacmanMoveScript.DeactivatePacmanFalling();
 		audioPlayerScript.PacmanDiedMethod();
 		pacmanLives = pacmanLives -1;
 		PrinterScript.PrintPacmanLives(pacmanLives);//send pacmanLives to Printer for print
