@@ -42,33 +42,18 @@ public class Connector : MonoBehaviour {
 
 	public GameObject PrinterObject;
 	Printer PrinterScript;
-//<<<<<<< HEAD// WHAT IS THIS??
-//	void Awake(){
-//		GameObject selectObject = GameObject.Find("SelectionInfo");
-//		int pacmanNumber = selectObject.gameObject.GetComponent<SelectionInfo>().WhatCharacter();
-//		if(pacmanNumber == 1){
-//			pacmanKaiObject.SetActive(true);
-//		}else if(pacmanNumber == 2){
-//			pacmanNicklasObject.SetActive(true);
-//		}else if(pacmanNumber == 3){
-//			pacmanJonObject.SetActive(true);
-//
-//		}
-//	}
-//=======
-/*	void Awake(){
+	void Awake(){
 		GameObject selectObject = GameObject.Find("SelectionInfo");
 		int pacmanNumber = selectObject.gameObject.GetComponent<SelectionInfo>().WhatCharacter();
 		if(pacmanNumber == 1){
 			pacmanKaiObject.SetActive(true);
 		}else if(pacmanNumber == 2){
 			pacmanNicklasObject.SetActive(true);
-		}else if(pacmanNumber == 3){
+			}else if(pacmanNumber == 3){
 			pacmanJonObject.SetActive(true);
 
 		}
-	}*/
-//>>>>>>> refs/remotes/origin/master // Jag, Marcus tog och kommenterade bort denna vet ej om denna var användbar gav mig en masse felkoder.
+	}
 
 	void Start () {
 		mapTime = startMapTime;
