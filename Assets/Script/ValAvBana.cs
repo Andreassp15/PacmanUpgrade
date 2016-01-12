@@ -19,11 +19,11 @@ public class ValAvBana : MonoBehaviour
     {
 		buttons = new List<string>();
 
-		for(int i = 0; i < 15; i++) // här lägger vi alla knapparna i listan, varför det sker två gånger är för att alla knappar ligger under två olika gameobjects.
+		for(int i = 0; i < 14; i++) // här lägger vi alla knapparna i listan, varför det sker två gånger är för att alla knappar ligger under två olika gameobjects.
 		{
 			buttons.Add(transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.transform.GetChild(i).gameObject.name);
 		}
-		for(int i = 0; i < 15; i++)
+		for(int i = 0; i < 14; i++)
 		{
 			buttons.Add(transform.GetChild(2).gameObject.transform.GetChild(1).gameObject.transform.GetChild(i).gameObject.name);
 		}
