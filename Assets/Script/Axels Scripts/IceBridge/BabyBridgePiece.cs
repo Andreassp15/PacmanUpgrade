@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class BabyBridgePiece : MonoBehaviour {
+public class BabyBridgePiece : MonoBehaviour { //
 
 	private FloatingBridges mama;
 
@@ -38,7 +38,6 @@ public class BabyBridgePiece : MonoBehaviour {
 		
 		if(col.gameObject.tag == ("Pacman"))
 		{
-			gameObject.tag = "DropZone";
 			mama.LetItFall(whoAmI);
 			mama.SetPacmanInAir(false);
 		}
