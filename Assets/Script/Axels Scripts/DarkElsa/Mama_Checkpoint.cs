@@ -31,12 +31,13 @@ public class Mama_Checkpoint : MonoBehaviour {
 
 	public void AddCheckpoint()
 	{
+		coins[checkpointTurnedOn].transform.position = centerPoints[checkpointTurnedOn].position;
+
 		checkpointTurnedOn++;
 		transform.parent.GetChild(0).GetComponent<ElsaController>().AddFireCheckpoint();
 
 		if(checkpointTurnedOn == 4)
 		{
-			Debug.Log("hej");
 			transform.parent.GetChild(0).GetComponent<ElsaController>().ChangeMusic(true);
 		}
 
@@ -50,18 +51,5 @@ public class Mama_Checkpoint : MonoBehaviour {
 	{
 		return elsaDead;
 	}
-	public void ActivateCoin(GameObject o)
-	{
-		int poo = new int();
 
-		foreach(GameObject t in coins)
-		{
-			poo++;
-
-			if(o.name == t.name)
-			{
-				t.transform.position = centerPoints[poo].position;
-			}
-		}
-	}
 }
