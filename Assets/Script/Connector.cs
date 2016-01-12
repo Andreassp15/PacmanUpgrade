@@ -42,7 +42,7 @@ public class Connector : MonoBehaviour {
 
 	public GameObject PrinterObject;
 	Printer PrinterScript;
-<<<<<<< HEAD
+//<<<<<<< HEAD// WHAT IS THIS??
 //	void Awake(){
 //		GameObject selectObject = GameObject.Find("SelectionInfo");
 //		int pacmanNumber = selectObject.gameObject.GetComponent<SelectionInfo>().WhatCharacter();
@@ -55,7 +55,7 @@ public class Connector : MonoBehaviour {
 //
 //		}
 //	}
-=======
+//=======
 /*	void Awake(){
 		GameObject selectObject = GameObject.Find("SelectionInfo");
 		int pacmanNumber = selectObject.gameObject.GetComponent<SelectionInfo>().WhatCharacter();
@@ -68,7 +68,7 @@ public class Connector : MonoBehaviour {
 
 		}
 	}*/
->>>>>>> refs/remotes/origin/master
+//>>>>>>> refs/remotes/origin/master // Jag, Marcus tog och kommenterade bort denna vet ej om denna var användbar gav mig en masse felkoder.
 
 	void Start () {
 		mapTime = startMapTime;
