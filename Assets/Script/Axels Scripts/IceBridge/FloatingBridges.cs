@@ -67,7 +67,10 @@ public class FloatingBridges : MonoBehaviour {
 
 	public void LetItFall(int o) //Denna metod anropar barnen när de faller. När alla barn ramlat kommer den kolla ifall någon bro ska räddas.
 	{
-
+		if(o != 0 || o != 5)
+		{
+			child_BridgePieceCollider[o].tag = "DropZone";
+		}
 
 
 		if(bridgeDown == false)
