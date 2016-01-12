@@ -69,7 +69,7 @@ public class Results : MonoBehaviour {
 		 
 
 
-		victoryPanel.transform.GetChild(3).GetComponent<Text>().text = "Time Bonus Score:" + bonusScoreTime.ToString() + "\n Total Score:" + totalScore.ToString();
+		victoryPanel.transform.GetChild(3).GetComponent<Text>().text = "Time Score: " + bonusScoreTime.ToString() + "\nTotal Score: " + totalScore.ToString();
 	
 	}
 	public void TurnOnGameOverPanel(int score, int time)
@@ -87,7 +87,9 @@ public class Results : MonoBehaviour {
 	}
 	public void ContinueButton()
 	{
-		Scene[] sceneList = new Scene[SceneManager.sceneCountInBuildSettings];
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex +1);
+		Time.timeScale = 1;
+		/*Scene[] sceneList = new Scene[SceneManager.sceneCountInBuildSettings];
 		sceneList = SceneManager.GetAllScenes();
 
 		storage.GetComponent<SelectionInfo>().TotalScore(totalScore);
@@ -100,7 +102,7 @@ public class Results : MonoBehaviour {
 			{
 				SceneManager.LoadScene(sceneList[i+1].name);
 			}
-		}
+		}*/
 	
 
 
