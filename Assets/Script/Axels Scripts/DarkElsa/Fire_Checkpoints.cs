@@ -40,8 +40,6 @@ public class Fire_Checkpoints : MonoBehaviour {
 			transform.GetChild(4).gameObject.GetComponent<ParticleSystem>().Play();
 
 			GetComponentInParent<Mama_Checkpoint>().AddCheckpoint();
-
-			transform.parent.GetComponent<Mama_Checkpoint>().ActivateCoin(gameObject);
 		}
 	}
 	private bool AllActive()
