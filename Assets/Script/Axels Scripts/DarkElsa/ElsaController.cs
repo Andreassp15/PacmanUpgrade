@@ -387,5 +387,15 @@ public class ElsaController : MonoBehaviour {
 		fireCheckpointsLit++;
 	}
 
+	public void ChangeMusic(bool o)
+	{
+		if(o == true);
+		{
+			speaker.clip = music[1];
+			speaker.Play();
+		}
+			
+	}
+
 				
 }

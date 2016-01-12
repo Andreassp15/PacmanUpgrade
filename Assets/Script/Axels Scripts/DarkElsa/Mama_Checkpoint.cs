@@ -33,6 +33,14 @@ public class Mama_Checkpoint : MonoBehaviour {
 	{
 		checkpointTurnedOn++;
 		transform.parent.GetChild(0).GetComponent<ElsaController>().AddFireCheckpoint();
+
+		if(checkpointTurnedOn == 4)
+		{
+			Debug.Log("hej");
+			transform.parent.GetChild(0).GetComponent<ElsaController>().ChangeMusic(true);
+		}
+
+
 	}
 	public void SubtractCheckpoint()
 	{
