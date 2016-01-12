@@ -45,6 +45,9 @@ public class ElsaController : MonoBehaviour {
 
 	private List<GameObject> fireCheckpoints;
 
+	private AudioClip[] music;
+	private AudioSource speaker;
+
 
 
 
@@ -53,7 +56,18 @@ public class ElsaController : MonoBehaviour {
 	{
 		iceSpikes = new GameObject[4];
 
+		music = new AudioClip[2];
+
+		music[0] = Resources.Load<AudioClip>("Boss2") as AudioClip;
+		music[1] = Resources.Load<AudioClip>("Boss2") as AudioClip;
+
 		fireCheckpoints = new List<GameObject>();
+
+		speaker = transform.parent.gameObject.GetComponent<AudioSource>();
+
+		speaker.clip = music[0];
+		speaker.volume = 0.35f;
+		speaker.Play();
 
 		for(int i = 0; i < 8; i++)
 		{
@@ -99,8 +113,7 @@ public class ElsaController : MonoBehaviour {
 		attacking = false;
 
 		currentPosision = 0;
-
-
+	
 		target = 1;
 
 	}
