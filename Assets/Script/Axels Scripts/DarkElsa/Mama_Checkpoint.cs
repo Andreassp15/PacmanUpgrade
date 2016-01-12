@@ -6,6 +6,7 @@ public class Mama_Checkpoint : MonoBehaviour {
 	private int checkpointTurnedOn  = 0;
 	private Dictionary<GameObject, GameObject> pairedCoins;
 	private List<GameObject> fireCheckpoints;
+	private List <Transform> centerPoints;
 	private List<GameObject> coins;
 
 
@@ -13,11 +14,16 @@ public class Mama_Checkpoint : MonoBehaviour {
 	{
 		coins = new List<GameObject>();
 		fireCheckpoints = new List<GameObject>();
+		centerPoints = new List<Transform>();
+
+
 
 		for(int i = 0; i < 8; i++)
 		{
 			coins.Add(transform.GetChild(8).GetChild(i).gameObject);
 			fireCheckpoints.Add(transform.GetChild(i).gameObject);
+			centerPoints.Add(transform.GetChild(9).GetChild(i));
+
 		}
 	}
 
@@ -38,13 +44,15 @@ public class Mama_Checkpoint : MonoBehaviour {
 	}
 	public void ActivateCoin(GameObject o)
 	{
-		for(int i = 0; i < fireCheckpoints.Count; i++)
-		{
-			if(o.name == fireCheckpoints[i].name)
-			{
-				coins[i].SetActive(true);
+		int poo = new int();
 
-				break;
+		foreach(GameObject t in coins)
+		{
+			poo++;
+
+			if(o.name == t.name)
+			{
+				t.transform.position = centerPoints[poo].position;
 			}
 		}
 	}
