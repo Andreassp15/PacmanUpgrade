@@ -42,18 +42,19 @@ public class Connector : MonoBehaviour {
 
 	public GameObject PrinterObject;
 	Printer PrinterScript;
-	/*void Awake(){
-		GameObject selectObject = GameObject.Find("SelectionInfo");
-		int pacmanNumber = selectObject.gameObject.GetComponent<SelectionInfo>().WhatCharacter();
-		if(pacmanNumber == 1){
-			pacmanKaiObject.SetActive(true);
-		}else if(pacmanNumber == 2){
-			pacmanNicklasObject.SetActive(true);
-		}else if(pacmanNumber == 3){
-			pacmanJonObject.SetActive(true);
 
-		}
-	}*/
+//	void Awake(){
+//		GameObject selectObject = GameObject.Find("SelectionInfo");
+//		int pacmanNumber = selectObject.gameObject.GetComponent<SelectionInfo>().WhatCharacter();
+//		if(pacmanNumber == 1){
+//			pacmanKaiObject.SetActive(true);
+//		}else if(pacmanNumber == 2){
+//			pacmanNicklasObject.SetActive(true);
+//		}else if(pacmanNumber == 3){
+//			pacmanJonObject.SetActive(true);
+//
+//		}
+//	}
 
 	void Start () {
 		mapTime = startMapTime;
