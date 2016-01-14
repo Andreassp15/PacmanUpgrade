@@ -28,7 +28,6 @@ public class FloatingBridges : MonoBehaviour {
 
 	private bool pacmanInAir;
 
-
 	void Start () {
 
 		bridgeMaterial = Resources.Load("W2_ElsaBridge") as Material;
@@ -67,16 +66,18 @@ public class FloatingBridges : MonoBehaviour {
 
 	public void LetItFall(int o) //Denna metod anropar barnen när de faller. När alla barn ramlat kommer den kolla ifall någon bro ska räddas.
 	{
-		if(o != 0 || o != 5)
-		{
-			child_BridgePieceCollider[o].tag = "DropZone";
-		}
+		
 
+		if( o > 0 && o < 5)
+			{
+				child_BridgePieceCollider[o].gameObject.tag = "DropZone";
+			}
 
 		if(bridgeDown == false)
 		{
 			child_BridgePieceCollider[o].gameObject.transform.GetChild(0).GetComponent<MeshRenderer>().sharedMaterial = bridgeDownMaterial; // Materialet försvinner så att bron inte syns.
 			child_BridgePieceCollider[o].gameObject.transform.GetChild(1).GetComponent<ParticleSystem>().Emit(50);
+
 
 		piecesDown++;
 
@@ -119,9 +120,9 @@ public class FloatingBridges : MonoBehaviour {
 	void BeamMeUp(int o) //Jag gör brodelarna synliga igen, ger tillbaka deras material.
 	{
 		child_BridgePieceCollider[o].gameObject.transform.GetChild(0).GetComponent<MeshRenderer>().sharedMaterial = bridgeMaterial;
-
+/*
 		child_BridgePieceCollider[o].gameObject.transform.GetChild(0).transform.position = originalPositions[o]; // brodelarna har fått sina ursprungliga värden för position och rotation sparade, som de nu
-		child_BridgePieceCollider[o].gameObject.transform.GetChild(0).transform.rotation = originalRotation[o]; //blir återställde till.
+		child_BridgePieceCollider[o].gameObject.transform.GetChild(0).transform.rotation = originalRotation[o]; //blir återställde till.*/
 		child_BridgePieceCollider[o].gameObject.transform.GetChild(0).transform.gameObject.tag = "Untagged";
 
 	}

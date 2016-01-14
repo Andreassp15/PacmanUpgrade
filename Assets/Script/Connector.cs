@@ -49,7 +49,7 @@ public class Connector : MonoBehaviour {
 			pacmanKaiObject.SetActive(true);
 		}else if(pacmanNumber == 2){
 			pacmanNicklasObject.SetActive(true);
-		}else if(pacmanNumber == 3){
+			}else if(pacmanNumber == 3){
 			pacmanJonObject.SetActive(true);
 
 		}
